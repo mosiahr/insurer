@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import InsurancePolicy, Car
+from .models import InsurancePolicy, Car, DataFile
 
 
 @admin.register(InsurancePolicy)
@@ -18,6 +18,12 @@ class InsurancePolicyAdmin(admin.ModelAdmin):
 class CarAdmin(admin.ModelAdmin):
     list_display = ('mark', 'model', 'registration_place',
                     'registration_country', 'registration_number', 'vin_code')
+    ordering = ['id']
+
+
+@admin.register(DataFile)
+class CarAdmin(admin.ModelAdmin):
+    list_display = ('file', 'created')
     ordering = ['id']
 
 

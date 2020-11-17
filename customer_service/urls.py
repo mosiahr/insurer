@@ -1,8 +1,8 @@
 from django.urls import path, include
 
 
-from .views import index
+from .views import InsurancePolicyView
 
 urlpatterns = [
-    path('', index),
+    path('polices/', InsurancePolicyView.as_view(), name='polices'),
 ]

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_countries',
+    'bootstrap4',
+    'django_tables2',
 
     'customer_service.apps.CustomerServiceConfig',
 
@@ -59,7 +62,7 @@ ROOT_URLCONF = 'insurer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -112,7 +115,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'uk-uk'
 
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 
@@ -126,6 +130,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DATE_INPUT_FORMATS = ['%d.%m.%Y']
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
 
 # Django Countries
 DEFAULT_COUNTRY_OF_CAR_REGISTRATION = 'UA'
