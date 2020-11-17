@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_countries',
     'bootstrap4',
     'django_tables2',
+    'django_filters',
 
     'customer_service.apps.CustomerServiceConfig',
 
