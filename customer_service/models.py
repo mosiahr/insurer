@@ -5,13 +5,11 @@ from decimal import Decimal
 
 from django.db import models
 from django.utils.translation import ugettext as _
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-
+from django.core.exceptions import ObjectDoesNotExist
 
 from django_countries.fields import CountryField
 
-from insurer.settings import DEFAULT_COUNTRY_OF_CAR_REGISTRATION, MEDIA_ROOT,\
-    DATE_INPUT_FORMATS
+from insurer.settings import DEFAULT_COUNTRY_UA, MEDIA_ROOT
 
 
 # class CompanyDirectorate(models.Model):
@@ -21,15 +19,50 @@ from insurer.settings import DEFAULT_COUNTRY_OF_CAR_REGISTRATION, MEDIA_ROOT,\
 # class CompanyBranch(models.Model):
 #     pass
 
-# class Customer(models.Model):
-#     name = models.CharField(max_length=50)
-
 class MainAbstractModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True
+
+
+class Customer(MainAbstractModel):
+    INSURANCE_TYPE_CHOICES = [
+        ('Ф', _('Individual entity')),
+        ('Ю', _('Legal entity')),
+    ]
+
+    name = models.CharField(max_length=50)
+    ind_number = models.CharField(
+        max_length=10,
+        unique=True,
+        verbose_name=_('Individual identification number'))
+    address = models.TextField()
+    country = models.CharField(max_length=50)
+    phone = models.CharField(max_length=50)
+    customer_type = models.CharField(
+        max_length=1,
+        choices=INSURANCE_TYPE_CHOICES,
+        default='Ф')
+
+    def __str__(self):
+        return self.name
+
+
+class Car(MainAbstractModel):
+    mark = models.CharField(max_length=50, verbose_name=_('Mark'))
+    model = models.CharField(max_length=50, verbose_name=_('Model'))
+    registration_place = models.CharField(
+        max_length=50, verbose_name=_('Registration Place'))
+    registration_country = CountryField(
+        default=DEFAULT_COUNTRY_UA)
+    registration_number = models.CharField(
+        max_length=50, verbose_name=_('Registration Number'))
+    vin_code = models.CharField(max_length=17, verbose_name=_('VIN code'))
+
+    def __str__(self):
+        return f'{self.mark} {self.model} ({self.registration_number})'
 
 
 class IntegerRangeField(models.PositiveSmallIntegerField):
@@ -52,10 +85,11 @@ class InsurancePolicy(MainAbstractModel):
     begin_date = models.DateField()
     end_date = models.DateField()
 
-    car = models.ForeignKey('Car', on_delete=models.PROTECT,
-                            verbose_name=_('Car'))
-
     insurance_code = IntegerRangeField(min_value=100, max_value=500)
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT,
+                                 verbose_name=_('Customer'))
+    car = models.ForeignKey(Car, on_delete=models.PROTECT,
+                            verbose_name=_('Car'))
 
     sum_insured = models.DecimalField(max_digits=8, decimal_places=2)
     price = models.DecimalField(max_digits=6, decimal_places=2)
@@ -70,21 +104,6 @@ class InsurancePolicy(MainAbstractModel):
 
     def __str__(self):
         return f'{self.number}'
-
-
-class Car(MainAbstractModel):
-    mark = models.CharField(max_length=50, verbose_name=_('Mark'))
-    model = models.CharField(max_length=50, verbose_name=_('Model'))
-    registration_place = models.CharField(
-        max_length=50, verbose_name=_('Registration Place'))
-    registration_country = CountryField(
-        default=DEFAULT_COUNTRY_OF_CAR_REGISTRATION)
-    registration_number = models.CharField(
-        max_length=50, verbose_name=_('Registration Number'))
-    vin_code = models.CharField(max_length=17, verbose_name=_('VIN code'))
-
-    def __str__(self):
-        return f'{self.mark} {self.model} ({self.registration_number})'
 
 
 class DataFile(MainAbstractModel):
@@ -126,6 +145,21 @@ class DataFile(MainAbstractModel):
                     if len(row):
 
                         try:
+                            print(row[13])
+                            customer = Customer.objects.get(
+                                ind_number=row[13])
+                        except ObjectDoesNotExist:
+                            customer = Customer(
+                                name=row[12],
+                                ind_number=row[13],
+                                address=row[14],
+                                country=row[15],
+                                phone=row[16],
+                                customer_type=row[17]
+                            )
+                            customer.save()
+
+                        try:
                             car = Car.objects.get(
                                 registration_number=row[22],
                                 vin_code=row[23])
@@ -143,11 +177,15 @@ class DataFile(MainAbstractModel):
                         except ObjectDoesNotExist:
                             policy = InsurancePolicy(
                                 number=row[6], sticker=row[7],
-                                registration_date=self.parse_date(row[8], self.date_format),
-                                begin_date=self.parse_date(row[9], self.date_format),
-                                end_date=self.parse_date(row[10], self.date_format),
-                                car=car,
+                                registration_date=self.parse_date(row[8],
+                                                                  self.date_format),
+                                begin_date=self.parse_date(row[9],
+                                                           self.date_format),
+                                end_date=self.parse_date(row[10],
+                                                         self.date_format),
                                 insurance_code=row[11],
+                                customer=customer,
+                                car=car,
                                 sum_insured=self.parse_number(row[24]),
                                 price=self.parse_number(row[25]),
                                 bonus=row[26],

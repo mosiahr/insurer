@@ -9,7 +9,10 @@ class InsurancePolicyTable(tables.Table):
         model = InsurancePolicy
         template_name = 'django_tables2/bootstrap.html'
         fields = ('id', 'number', 'registration_date', 'begin_date', 'end_date',
-                  'car', 'insurance_code', 'price', 'territory')
+                  'customer', 'car', 'insurance_code', 'price', 'territory')
 
     def render_price(self, value):
         return f'{value} грн.'
+
+    def render_territory(self, value):
+        return str(value)[:15]
