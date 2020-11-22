@@ -9,7 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from django_countries.fields import CountryField
 
-from insurer.settings import DEFAULT_COUNTRY_UA, MEDIA_ROOT
+from insurer.settings import DEFAULT_COUNTRY_UA, MEDIA_ROOT, DATE_INPUT_FORMAT
 
 
 # class CompanyDirectorate(models.Model):
@@ -107,7 +107,7 @@ class InsurancePolicy(MainAbstractModel):
 
 
 class DataFile(MainAbstractModel):
-    date_format = '%d.%m.%Y'
+    date_format = DATE_INPUT_FORMAT
     file = models.FileField(upload_to='data_file/%Y/%m/%d')
 
     class Meta:

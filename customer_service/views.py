@@ -11,7 +11,11 @@ class InsurancePolicyView(SingleTableMixin, FilterView):
     form_class = InsurancePolicyForm
     model = InsurancePolicy
     table_class = InsurancePolicyTable
-    template_name = 'customer_service/polices.html'
-    context_object_name = 'polices'
+    template_name = 'customer_service/policies.html'
+    context_object_name = 'policies'
 
     filterset_class = InsurancePolicyFilter
+
+    # def get_context_data(self, **kwargs):
+    #     return super(InsurancePolicyView, self).get_context_data(**kwargs)
+
