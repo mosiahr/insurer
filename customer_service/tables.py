@@ -11,6 +11,9 @@ class InsurancePolicyTable(tables.Table):
         fields = ('id', 'number', 'registration_date', 'begin_date', 'end_date',
                   'customer', 'car', 'insurance_code', 'price', 'territory')
 
+    def render_number(self, value, record):
+        return format_html('<a href="{}">{}</a>', record.id, value)
+
     def render_price(self, value):
         return f'{value} грн.'
 

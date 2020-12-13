@@ -1,3 +1,7 @@
+from django.views import View
+from django.views.generic.detail import SingleObjectMixin, \
+    SingleObjectTemplateResponseMixin, DetailView
+
 from django_tables2 import SingleTableMixin
 from django_filters.views import FilterView
 
@@ -18,4 +22,10 @@ class InsurancePolicyView(SingleTableMixin, FilterView):
 
     # def get_context_data(self, **kwargs):
     #     return super(InsurancePolicyView, self).get_context_data(**kwargs)
+
+
+class InsurancePolicyDetailView(DetailView):
+    model = InsurancePolicy
+    template_name = 'customer_service/policy_detail.html'
+    context_object_name = 'policy'
 
