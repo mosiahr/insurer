@@ -16,7 +16,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="{% url 'customer_service:policies' %}">Policies<span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="{% url 'customer_service:policies' %}">Policies<span
+                    class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="#">Features</a>
             <a class="nav-item nav-link" href="#">Pricing</a>
             <a class="nav-item nav-link disabled" href="#" tabindex="-1"
@@ -25,11 +26,25 @@
     </div>
 </nav>
 
-<!-- CONTENT -->
+<!-- Content -->
 <div class="container-fluid">
     {% block content %}{% endblock %}
 </div>
 
+<!-- Footer -->
+<footer class="page-footer font-small blue">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+        <a href="#"> Insurer</a>
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+
+{% block javascript %}{% endblock %}
 
 </body>
 </html>

@@ -98,6 +98,17 @@ class InsurancePolicy(MainAbstractModel):
 
     territory = models.TextField()
 
+    is_reinsured = models.BooleanField(
+        default=False, verbose_name=_('Reinsured'))
+    is_reinsured_another_company = models.BooleanField(
+        default=False, verbose_name=_('Reinsured in another company'))
+    is_impossible_to_call = models.BooleanField(
+        default=False, verbose_name=_('Impossible to call'))
+    is_called_will_insure = models.BooleanField(
+        default=False, verbose_name=_('Was called and will insure'))
+    is_called_will_not_insure = models.BooleanField(
+        default=False, verbose_name=_('Was called and will not insure'))
+
     class Meta:
         verbose_name = _('Insurance Policy')
         verbose_name_plural = _('Insurance Polices')
