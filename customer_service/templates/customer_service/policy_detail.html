@@ -8,7 +8,7 @@
         <span class="badge badge-pill badge-secondary">Policy detail</span></div>
 
     <!-- Result after the call to the customer -->
-    <h4>
+    <h4 id="result-after-call" data-insurance-policy-update-url="{% url 'api-customer-service:api-insurance-policy-update' pk=policy.id %}">
         <a href="#" id="is_reinsured"
            class="badge badge-{% if policy.is_reinsured %}success{% else %}secondary{% endif %}"> {% trans 'Reinsured' %}</a>
         <a href="#" id="is_reinsured_another_company"
@@ -75,12 +75,74 @@
 
 {% block javascript %}
     <script>
-        function changeClass(){
-            if ($(this).hasClass("badge-success") === true){
+        var urlApiInsurancePolicyUpdate = $('#result-after-call').attr('data-insurance-policy-update-url');
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        const csrftoken = getCookie('csrftoken');
+
+        function putDataAjax(data) {
+            $.ajax({
+                method: 'PUT',
+                url: urlApiInsurancePolicyUpdate,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken)
+                },
+                data: data,
+            })
+                .done(function (data) {
+                })
+                .fail(function (data) {
+                    console.log("error");
+                })
+        }
+
+        function getDataAjax() {
+            var result = '';
+            $.ajax({
+                method: 'GET',
+                url: urlApiInsurancePolicyUpdate,
+                async: false
+            })
+                .done(function (data) {
+                    result = data;
+                })
+                .fail(function (data) {
+                    result = data;
+                    console.log("error");
+                })
+            return result;
+        }
+
+        function changeClass() {
+            var data = getDataAjax();
+            var this_bool;
+
+            if ($(this).hasClass("badge-success") === true) {
+                this_bool = true;
                 $(this).removeClass("badge-success").addClass("badge-secondary");
-            }else {
+            } else {
+                this_bool = false;
                 $(this).removeClass("badge-secondary").addClass("badge-success");
             }
+
+            var this_id = $(this).attr('id');
+            data[this_id] = !this_bool;
+            putDataAjax(data);
         }
 
         $("#is_reinsured").on("click", changeClass);

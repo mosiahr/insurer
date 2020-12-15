@@ -23,6 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('customer-service/',
          include('customer_service.urls', namespace='customer-service')),
+    path('api/v1/customer-service/',
+         include('customer_service.api.urls', namespace='api-customer-service'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
