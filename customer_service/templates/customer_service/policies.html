@@ -19,3 +19,86 @@
 
 {% endblock %}
 
+{% block javascript %}
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        const csrftoken = getCookie('csrftoken');
+
+        function putDataAjax(data, url) {
+            $.ajax({
+                method: 'PUT',
+                url: url,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken)
+                },
+                data: data,
+            })
+                .done(function (data) {
+                })
+                .fail(function (data) {
+                    console.log("error");
+                })
+        }
+
+        function getDataAjax(url) {
+            var result = '';
+            $.ajax({
+                method: 'GET',
+                url: url,
+                async: false
+            })
+                .done(function (data) {
+                    result = data;
+                })
+                .fail(function (data) {
+                    result = data;
+                    console.log("error");
+                })
+            return result;
+        }
+
+        $("table.table > tbody > tr").delegate('td', 'click', function (event) {
+            var thisTdClass = $(this).attr('class');
+            var resultAfterTheCall = ['is_reinsured', 'is_reinsured_another_company', 'is_impossible_to_call',
+                'is_called_will_insure', 'is_called_will_not_insure'];
+
+            if (resultAfterTheCall.includes(thisTdClass)) {
+                event.preventDefault();
+
+                //var policyId = $(this).parent('tr').attr('data-id');
+                var dataUrlPolicy = $(this).parent('tr').attr('data-url');
+                var data = getDataAjax(dataUrlPolicy);
+
+                var yes = '✔';
+                var no = '❌';
+                if ($(this).find('span').is('.true')) {
+                    $(this).find('span').removeClass('true').addClass('false');
+                    $(this).find('span').empty().append(no);
+                } else {
+                    $(this).find('span').removeClass('false').addClass('true');
+                    $(this).find('span').empty().append(yes);
+                }
+
+                data[thisTdClass] = $(this).find('span').attr('class');
+                putDataAjax(data, dataUrlPolicy);
+            }
+        });
+
+    </script>
+{% endblock %}
+
