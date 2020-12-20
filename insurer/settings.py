@@ -41,9 +41,11 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'django_countries',
-    'bootstrap4',
     'django_tables2',
     'django_filters',
+
+    'bootstrap4',
+    'bsmodals',
     'bootstrap_datepicker_plus',
 
     'customer_service.apps.CustomerServiceConfig',
@@ -129,7 +131,8 @@ USE_TZ = True
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',  # Find static diretcoty in package app
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # Find static diretcoty in package app
 )
 
 STATIC_URL = '/static/'

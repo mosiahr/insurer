@@ -8,7 +8,7 @@ from .models import InsurancePolicy
 
 
 class InsurancePolicyTable(tables.Table):
-    number = tables.LinkColumn('customer-service:policy_detail', args=[A('pk')])
+    number = tables.LinkColumn('customer-service:policy_detail', args=[A('pk')], attrs={'td': {'class': 'number'}})
 
     is_reinsured = tables.Column(attrs={'td': {'class': 'is_reinsured'}})
     is_reinsured_another_company = tables.Column(
@@ -33,7 +33,7 @@ class InsurancePolicyTable(tables.Table):
             'data-id': lambda record: record.pk,
             'data-url': lambda record: reverse(
                 'api-customer-service:api-insurance-policy-update',
-                kwargs={'pk': record.pk})
+                kwargs={'pk': record.pk}),
         }
 
     def render_price(self, value):

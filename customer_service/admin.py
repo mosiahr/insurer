@@ -37,7 +37,6 @@ class InsurancePolicyAdmin(admin.ModelAdmin):
     get_territory.short_description = _('Territory')
 
 
-
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
     list_display = ('mark', 'model', 'registration_place',
@@ -46,7 +45,7 @@ class CarAdmin(admin.ModelAdmin):
 
 
 @admin.register(DataFile)
-class CarAdmin(admin.ModelAdmin):
+class DataFileAdmin(admin.ModelAdmin):
     list_display = ('file', 'created')
     ordering = ['id']
 

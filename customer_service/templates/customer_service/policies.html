@@ -17,10 +17,16 @@
 
     {% render_table table %}
 
+    {% include "bsmodals/confirm.html" %}
+
 {% endblock %}
 
 {% block javascript %}
+    <script src="/static/bsmodals/bsmodals.js"></script>
+    {#    <script src="/static/bsmodals/restapi.js"></script>#}
+
     <script>
+
         function getCookie(name) {
             var cookieValue = null;
             if (document.cookie && document.cookie != '') {
@@ -39,20 +45,24 @@
 
         const csrftoken = getCookie('csrftoken');
 
-        function putDataAjax(data, url) {
+        function putDataAjax(putData, url) {
+            var result = "";
             $.ajax({
                 method: 'PUT',
                 url: url,
+                async: false,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("X-CSRFToken", csrftoken)
                 },
-                data: data,
+                data: putData,
             })
                 .done(function (data) {
+                    result = data;
                 })
                 .fail(function (data) {
                     console.log("error");
                 })
+            return result;
         }
 
         function getDataAjax(url) {
@@ -73,6 +83,7 @@
         }
 
         $("table.table > tbody > tr").delegate('td', 'click', function (event) {
+            var tr = $(this);
             var thisTdClass = $(this).attr('class');
             var resultAfterTheCall = ['is_reinsured', 'is_reinsured_another_company', 'is_impossible_to_call',
                 'is_called_will_insure', 'is_called_will_not_insure'];
@@ -80,22 +91,31 @@
             if (resultAfterTheCall.includes(thisTdClass)) {
                 event.preventDefault();
 
-                //var policyId = $(this).parent('tr').attr('data-id');
-                var dataUrlPolicy = $(this).parent('tr').attr('data-url');
-                var data = getDataAjax(dataUrlPolicy);
+                //var numberPolicy = tr.parent('tr').find('td')[1];
+                var numberPolicy = tr.parent('tr').find('td.number').text();
 
-                var yes = '✔';
-                var no = '❌';
-                if ($(this).find('span').is('.true')) {
-                    $(this).find('span').removeClass('true').addClass('false');
-                    $(this).find('span').empty().append(no);
-                } else {
-                    $(this).find('span').removeClass('false').addClass('true');
-                    $(this).find('span').empty().append(yes);
-                }
+                bsmodals_confirm('Policy ' + numberPolicy + ' update',
+                    'Are you sure you want to update the policy ?', function (result) {
+                        if (result) {
+                            //var policyId = $(this).parent('tr').attr('data-id');
+                            var dataUrlPolicy = tr.parent('tr').attr('data-url');
+                            var data = getDataAjax(dataUrlPolicy);
 
-                data[thisTdClass] = $(this).find('span').attr('class');
-                putDataAjax(data, dataUrlPolicy);
+                            var yes = '✔';
+                            var no = '❌';
+                            if (tr.find('span').is('.true')) {
+                                tr.find('span').removeClass('true').addClass('false');
+                                tr.find('span').empty().append(no);
+                            } else {
+                                tr.find('span').removeClass('false').addClass('true');
+                                tr.find('span').empty().append(yes);
+                            }
+
+                            data[thisTdClass] = tr.find('span').attr('class');
+                            //var putResult = putDataAjax(data, dataUrlPolicy);
+                        }
+                    }, yes_text = 'YES', yes_style = 'btn-success', no_text = 'NO',
+                    no_style = 'btn-secondary');
             }
         });
 
