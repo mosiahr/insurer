@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 from pathlib import Path
+from .conf import SECRET_KEY
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'cpnjlr(z03tzd^4-(q0$yt6-o9c@n523$&mkegs^7l^%5r+pz8'
+# SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
 
+    'phonenumber_field',
     'django_countries',
     'django_tables2',
     'django_filters',
@@ -132,7 +134,6 @@ USE_TZ = True
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    # Find static diretcoty in package app
 )
 
 STATIC_URL = '/static/'
@@ -154,3 +155,6 @@ DEFAULT_COUNTRY_UA = 'UA'
 # django-cors-headers
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_URLS_REGEX = r'^/api/.*$'
+
+# django-phonenumber-field
+PHONENUMBER_DEFAULT_REGION = 'UA'

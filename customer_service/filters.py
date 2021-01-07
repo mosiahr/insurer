@@ -3,6 +3,8 @@ from django import forms
 
 import django_filters
 from bootstrap_datepicker_plus import DatePickerInput
+from django_filters import DateFromToRangeFilter, DateRangeFilter
+from django_filters.widgets import RangeWidget
 
 from insurer.settings import DATE_INPUT_FORMAT
 from .models import InsurancePolicy, Customer
@@ -14,6 +16,11 @@ class InsurancePolicyFilter(django_filters.FilterSet):
 
     car = django_filters.CharFilter(field_name='car',
                                     method='filter_car')
+
+    # end_date = DateFromToRangeFilter(
+    #     widget=RangeWidget(attrs={'placeholder': 'DD.MM.YYYY'}))
+
+    # end_date = DateRangeFilter()
 
     def filter_customer(self, queryset, name, value):
         return queryset.filter(customer__name__icontains=value)

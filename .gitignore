@@ -3,6 +3,7 @@
 __pycache__/*
 db.sqlite3
 media/*
+insurer/conf.py
 
 node_modules
 

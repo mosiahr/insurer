@@ -6,7 +6,6 @@
 
 {% block content %}
     <h2>Policies</h2>
-
     {% if filter %}
         {{ filter.form.media }}
         <form action="" method="get" class="form form-inline">
@@ -18,7 +17,10 @@
     {% render_table table %}
 
     {% include "bsmodals/confirm.html" %}
+    {% include "bsmodals/error.html" %}
+    {% include "bsmodals/alert.html" %}
 
+    <p id="message-sms-url" data-url="{{ message_sms_url }}">{{ message_sms_url }}</p>
 {% endblock %}
 
 {% block javascript %}
@@ -26,6 +28,7 @@
     {#    <script src="/static/bsmodals/restapi.js"></script>#}
 
     <script>
+        {# From Django doc #}
 
         function getCookie(name) {
             var cookieValue = null;
@@ -43,27 +46,8 @@
             return cookieValue;
         }
 
-        const csrftoken = getCookie('csrftoken');
-
-        function putDataAjax(putData, url) {
-            var result = "";
-            $.ajax({
-                method: 'PUT',
-                url: url,
-                async: false,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken)
-                },
-                data: putData,
-            })
-                .done(function (data) {
-                    result = data;
-                })
-                .fail(function (data) {
-                    console.log("error");
-                })
-            return result;
-        }
+        var csrftoken = getCookie('csrftoken');
+        var urlMessageCreate = $('#message-sms-url').attr('data-url');
 
         function getDataAjax(url) {
             var result = '';
@@ -82,37 +66,113 @@
             return result;
         }
 
+        {#function putDataAjax(putData, url) {#}
+        {#    var res = $.ajax({#}
+        {#        method: 'PUT',#}
+        {#        url: url,#}
+        {#async: false,#}
+        {#        beforeSend: function (xhr) {#}
+        {#            xhr.setRequestHeader("X-CSRFToken", csrftoken)#}
+        {#        },#}
+        {#        data: putData,#}
+        {#    })#}
+        {#        .done(function (data, status, jqXHR) {#}
+        {#            console.log('R: ', data);#}
+        {#            console.log('Status: ', status);#}
+        {#            console.log('jqXHR: ', jqXHR.status);#}
+        {#        })#}
+        {#        .fail(function (data) {#}
+        {#            console.log("error");#}
+        {#        })#}
+        {#    return res;#}
+
         $("table.table > tbody > tr").delegate('td', 'click', function (event) {
-            var tr = $(this);
-            var thisTdClass = $(this).attr('class');
+            var yes = '✔';
+            var no = '❌';
+            var td = $(this);
+            var thisTdClass = td.attr('class');
             var resultAfterTheCall = ['is_reinsured', 'is_reinsured_another_company', 'is_impossible_to_call',
                 'is_called_will_insure', 'is_called_will_not_insure'];
 
-            if (resultAfterTheCall.includes(thisTdClass)) {
-                event.preventDefault();
+            var numberPolicy = td.parent('tr').find('td.number').text();
+            var end_datePolicy = td.parent('tr').find('td.end_date').text();
 
-                //var numberPolicy = tr.parent('tr').find('td')[1];
-                var numberPolicy = tr.parent('tr').find('td.number').text();
+            var thisButton = $(this).find('button');
+
+            if (resultAfterTheCall.includes(thisTdClass)) {
+                {#event.preventDefault();#}
 
                 bsmodals_confirm('Policy ' + numberPolicy + ' update',
                     'Are you sure you want to update the policy ?', function (result) {
                         if (result) {
                             //var policyId = $(this).parent('tr').attr('data-id');
-                            var dataUrlPolicy = tr.parent('tr').attr('data-url');
+                            var dataUrlPolicy = td.parent('tr').attr('data-url');
                             var data = getDataAjax(dataUrlPolicy);
 
-                            var yes = '✔';
-                            var no = '❌';
-                            if (tr.find('span').is('.true')) {
-                                tr.find('span').removeClass('true').addClass('false');
-                                tr.find('span').empty().append(no);
-                            } else {
-                                tr.find('span').removeClass('false').addClass('true');
-                                tr.find('span').empty().append(yes);
-                            }
+                            data[thisTdClass] = td.find('span').attr('class') !== 'true';
 
-                            data[thisTdClass] = tr.find('span').attr('class');
-                            //var putResult = putDataAjax(data, dataUrlPolicy);
+                            $.ajax({
+                                method: 'PUT',
+                                url: dataUrlPolicy,
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("X-CSRFToken", csrftoken)
+                                },
+                                data: data,
+                            })
+                                .done(function (data, status, jqXHR) {
+                                    {#console.log('jqXHR: ', jqXHR.status);#}
+                                    if (td.find('span').is('.true')) {
+                                        td.find('span').removeClass('true').addClass('false');
+                                        td.find('span').empty().append(no);
+                                    } else {
+                                        td.find('span').removeClass('false').addClass('true');
+                                        td.find('span').empty().append(yes);
+                                    }
+                                })
+                                .fail(function (data) {
+                                    bsmodals_error(data.statusText, "btn-warning");
+                                })
+                        }
+                    }, yes_text = 'YES', yes_style = 'btn-success', no_text = 'NO', no_style = 'btn-secondary'
+                );
+            } else if (thisButton.attr('class', 'send_sms')) {
+                console.log('SEND Sms');
+
+                bsmodals_confirm('Customer policy expires on ' + end_datePolicy,
+                    'Are you sure you want to send the sms?', function (result) {
+                        if (result) {
+                            var policyId = td.parent('tr').attr('data-id');
+                            console.log(policyId);
+                            {#var dataUrlPolicy = td.parent('tr').attr('data-url');#}
+                            $.ajax({
+                                method: 'POST',
+                                url: urlMessageCreate,
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("X-CSRFToken", csrftoken)
+                                },
+                                data: {
+                                    "sid": "444000000000",
+                                    "body": "Hello ...",
+                                    "from_phone_number": "+380960000000",
+                                    "to_phone_number": "+380960000000",
+                                    "customer": 1,
+                                    "car": 1,
+                                    "insurance_policy": 1
+                                },
+                            })
+                                .done(function (data, status, jqXHR) {
+                                        console.log('jqXHR: ', jqXHR.status);
+                                        bsmodals_alert('Hi', 'Done')
+                                    }
+                                )
+                                .fail(function (data) {
+                                    bsmodals_error(data.statusText, "btn-warning");
+                                })
+
+                            {#var data = getDataAjax(dataUrlPolicy);#}
+
+                            {#data[thisTdClass] = tr.find('span').attr('class');#}
+                            {#putDataAjax(data, dataUrlPolicy);#}
                         }
                     }, yes_text = 'YES', yes_style = 'btn-success', no_text = 'NO',
                     no_style = 'btn-secondary');

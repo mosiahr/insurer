@@ -1,5 +1,6 @@
 from django.utils.html import format_html
 from django.urls import reverse
+from django.utils.translation import ugettext as _
 
 import django_tables2 as tables
 from django_tables2.utils import A  # alias for Accessor
@@ -8,8 +9,10 @@ from .models import InsurancePolicy
 
 
 class InsurancePolicyTable(tables.Table):
-    number = tables.LinkColumn('customer-service:policy_detail', args=[A('pk')], attrs={'td': {'class': 'number'}})
+    number = tables.LinkColumn('customer-service:policy_detail', args=[A('pk')],
+                               attrs={'td': {'class': 'number'}})
 
+    end_date = tables.DateColumn(attrs={'td': {'class': 'end_date'}})
     is_reinsured = tables.Column(attrs={'td': {'class': 'is_reinsured'}})
     is_reinsured_another_company = tables.Column(
         attrs={'td': {'class': 'is_reinsured_another_company'}})
@@ -19,6 +22,11 @@ class InsurancePolicyTable(tables.Table):
         attrs={'td': {'class': 'is_called_will_insure'}})
     is_called_will_not_insure = tables.Column(
         attrs={'td': {'class': 'is_called_will_not_insure'}})
+
+    send_sms = tables.TemplateColumn(
+        verbose_name=_('Send SMS'),
+        template_code=f"<button type='button' class='btn btn-outline-primary send_sms'>{_('Send SMS')}</button>",
+        orderable=False)  # orderable not sortable
 
     class Meta:
         model = InsurancePolicy

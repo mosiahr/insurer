@@ -7,9 +7,14 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ObjectDoesNotExist
 
+from phonenumber_field.modelfields import PhoneNumberField
 from django_countries.fields import CountryField
+from django.contrib.auth import get_user_model
 
 from insurer.settings import DEFAULT_COUNTRY_UA, MEDIA_ROOT, DATE_INPUT_FORMAT
+from insurer.conf import FROM_, TO
+
+User = get_user_model()
 
 
 # class CompanyDirectorate(models.Model):
@@ -20,6 +25,7 @@ from insurer.settings import DEFAULT_COUNTRY_UA, MEDIA_ROOT, DATE_INPUT_FORMAT
 #     pass
 
 class MainAbstractModel(models.Model):
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -33,7 +39,7 @@ class Customer(MainAbstractModel):
         ('Ю', _('Legal entity')),
     ]
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=200)
     ind_number = models.CharField(
         max_length=10,
         unique=True,
@@ -114,7 +120,7 @@ class InsurancePolicy(MainAbstractModel):
         verbose_name_plural = _('Insurance Polices')
 
     def __str__(self):
-        return f'{self.number}'
+        return self.number
 
 
 class DataFile(MainAbstractModel):
@@ -156,11 +162,11 @@ class DataFile(MainAbstractModel):
                     if len(row):
 
                         try:
-                            print(row[13])
                             customer = Customer.objects.get(
                                 ind_number=row[13])
                         except ObjectDoesNotExist:
                             customer = Customer(
+                                # user=self.user,
                                 name=row[12],
                                 ind_number=row[13],
                                 address=row[14],
@@ -176,6 +182,7 @@ class DataFile(MainAbstractModel):
                                 vin_code=row[23])
                         except ObjectDoesNotExist:
                             car = Car(
+                                # user=self.user,
                                 mark=row[18], model=row[19],
                                 registration_place=row[20],
                                 registration_country=row[21],
@@ -187,6 +194,7 @@ class DataFile(MainAbstractModel):
                             InsurancePolicy.objects.get(number=row[6])
                         except ObjectDoesNotExist:
                             policy = InsurancePolicy(
+                                # user=self.user,
                                 number=row[6], sticker=row[7],
                                 registration_date=self.parse_date(row[8],
                                                                   self.date_format),
@@ -203,3 +211,39 @@ class DataFile(MainAbstractModel):
                                 territory=row[27],
                             )
                             policy.save()
+
+
+# MESSAGES
+class MessageAbstractModel(MainAbstractModel):
+    sid = models.CharField(max_length=200)
+    body = models.TextField(verbose_name=_('Message body'))
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.sid
+
+
+# MESSAGES-SMS
+class MessageSmsAbstractModel(MessageAbstractModel):
+    from_phone_number = PhoneNumberField()
+    to_phone_number = PhoneNumberField()
+
+    class Meta:
+        abstract = True
+        verbose_name = _('Message SMS')
+        verbose_name_plural = _('Messages SMS')
+
+
+class MessageSmsInsurancePolicyExpires(MessageSmsAbstractModel):
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT,
+                                 verbose_name=_('Customer'))
+    car = models.ForeignKey(Car, on_delete=models.PROTECT,
+                            verbose_name=_('Car'))
+    insurance_policy = models.ForeignKey(InsurancePolicy,
+                                         on_delete=models.PROTECT,
+                                         verbose_name=_('Insurance Policy'))
+
+    def __repr__(self):
+        return f'<Message {self.sid} for insurance policy {self.insurance_policy}>'
