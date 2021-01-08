@@ -1,4 +1,5 @@
 from twilio.rest import Client
+from twilio.base.exceptions import TwilioRestException
 
 
 class CreateMessage:
@@ -6,8 +7,13 @@ class CreateMessage:
         self.client = Client(account_sid, auth_token)
 
     def create(self, to, from_, body_message):
-        message = self.client.messages.create(
-            from_=from_,
-            to=to,
-            body=body_message)
-        print(message.sid)
+        try:
+            message = self.client.messages.create(
+                from_=from_,
+                to=to,
+                body=body_message)
+            sid = message.sid
+            print("Status: ", message.status)
+            return sid
+        except TwilioRestException as e:
+            print(e)

@@ -115,5 +115,13 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(MessageSmsInsurancePolicyExpires)
 class MessageSmsInsurancePolicyExpiresAdmin(admin.ModelAdmin):
-    list_display = ('id', 'sid', 'body', 'from_phone_number', 'to_phone_number',
-                    'insurance_policy')
+    list_display = ('sid', 'body', 'from_phone_number', 'to_phone_number',
+                    'insurance_policy', 'created')
+    readonly_fields = ['created']
+    list_display_links = ['sid']
+
+    def get_readonly_fields(self, request, obj=None):
+        """
+        Hook for specifying custom readonly fields.
+        """
+        return [field.name for field in self.model._meta.fields]

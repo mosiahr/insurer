@@ -20,7 +20,7 @@
     {% include "bsmodals/error.html" %}
     {% include "bsmodals/alert.html" %}
 
-    <p id="message-sms-url" data-url="{{ message_sms_url }}">{{ message_sms_url }}</p>
+    <p id="message-sms-url" data-url="{{ message_sms_url }}"></p>
 {% endblock %}
 
 {% block javascript %}
@@ -100,8 +100,6 @@
             var thisButton = $(this).find('button');
 
             if (resultAfterTheCall.includes(thisTdClass)) {
-                {#event.preventDefault();#}
-
                 bsmodals_confirm('Policy ' + numberPolicy + ' update',
                     'Are you sure you want to update the policy ?', function (result) {
                         if (result) {
@@ -136,14 +134,10 @@
                     }, yes_text = 'YES', yes_style = 'btn-success', no_text = 'NO', no_style = 'btn-secondary'
                 );
             } else if (thisButton.attr('class', 'send_sms')) {
-                console.log('SEND Sms');
-
                 bsmodals_confirm('Customer policy expires on ' + end_datePolicy,
                     'Are you sure you want to send the sms?', function (result) {
                         if (result) {
                             var policyId = td.parent('tr').attr('data-id');
-                            console.log(policyId);
-                            {#var dataUrlPolicy = td.parent('tr').attr('data-url');#}
                             $.ajax({
                                 method: 'POST',
                                 url: urlMessageCreate,
@@ -151,28 +145,18 @@
                                     xhr.setRequestHeader("X-CSRFToken", csrftoken)
                                 },
                                 data: {
-                                    "sid": "444000000000",
-                                    "body": "Hello ...",
-                                    "from_phone_number": "+380960000000",
-                                    "to_phone_number": "+380960000000",
-                                    "customer": 1,
-                                    "car": 1,
-                                    "insurance_policy": 1
+                                    {#"body": "Hello ...",#}
+                                    "insurance_policy": policyId
                                 },
                             })
                                 .done(function (data, status, jqXHR) {
-                                        console.log('jqXHR: ', jqXHR.status);
+                                        {#console.log('jqXHR: ', jqXHR.status);#}
                                         bsmodals_alert('Hi', 'Done')
                                     }
                                 )
                                 .fail(function (data) {
                                     bsmodals_error(data.statusText, "btn-warning");
                                 })
-
-                            {#var data = getDataAjax(dataUrlPolicy);#}
-
-                            {#data[thisTdClass] = tr.find('span').attr('class');#}
-                            {#putDataAjax(data, dataUrlPolicy);#}
                         }
                     }, yes_text = 'YES', yes_style = 'btn-success', no_text = 'NO',
                     no_style = 'btn-secondary');

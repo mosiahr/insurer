@@ -16,4 +16,4 @@ class MessageSmsSerializer(serializers.ModelSerializer):
     class Meta:
         model = MessageSmsInsurancePolicyExpires
         fields = ('sid', 'body', 'from_phone_number', 'to_phone_number',
-                  'customer', 'car', 'insurance_policy')
+                  'insurance_policy')

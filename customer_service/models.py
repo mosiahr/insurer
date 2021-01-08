@@ -227,8 +227,8 @@ class MessageAbstractModel(MainAbstractModel):
 
 # MESSAGES-SMS
 class MessageSmsAbstractModel(MessageAbstractModel):
-    from_phone_number = PhoneNumberField()
-    to_phone_number = PhoneNumberField()
+    from_phone_number = PhoneNumberField(region='US', default=FROM_)
+    to_phone_number = PhoneNumberField(region='UA', default=TO)
 
     class Meta:
         abstract = True
@@ -237,13 +237,6 @@ class MessageSmsAbstractModel(MessageAbstractModel):
 
 
 class MessageSmsInsurancePolicyExpires(MessageSmsAbstractModel):
-    customer = models.ForeignKey(Customer, on_delete=models.PROTECT,
-                                 verbose_name=_('Customer'))
-    car = models.ForeignKey(Car, on_delete=models.PROTECT,
-                            verbose_name=_('Car'))
     insurance_policy = models.ForeignKey(InsurancePolicy,
                                          on_delete=models.PROTECT,
                                          verbose_name=_('Insurance Policy'))
-
-    def __repr__(self):
-        return f'<Message {self.sid} for insurance policy {self.insurance_policy}>'
