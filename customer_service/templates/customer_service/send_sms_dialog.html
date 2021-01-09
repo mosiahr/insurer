@@ -1,0 +1,27 @@
+{% extends "bsmodals/generic.html" %}
+
+{#{% block title %}#}
+{#    <h5 id="mydialog-title">Title</h5>#}
+{#{% endblock title %}#}
+
+{% block body %}
+    <h5 id="send-sms-dialog-title">Update message SMS</h5>
+
+    <form>
+        <div class="form-group">
+            <label for="customer" class="col-form-label">Customer</label>
+            <input type="text" class="form-control" id="customer" name="customer">
+
+            <label for="number_policy" class="col-form-label">Insurance Policy</label>
+            <input type="text" class="form-control" id="number_policy" name="number_policy">
+
+            <label for="message_send_sms" class="col-form-label">Message</label>
+            <textarea id="message_send_sms" class="form-control" name="message_send_sms" rows="5"></textarea>
+        </div>
+    </form>
+{% endblock body %}
+
+{% block footer %}
+    <button id="send-sms-dialog-update" type="submit" data-dismiss="modal" class="submit-btn btn btn-primary">Update</button>
+    <button id="send-sms-dialog-close" type="button" data-dismiss="modal" class="btn btn-primary">Close</button>
+{% endblock footer %}

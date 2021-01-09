@@ -16,6 +16,7 @@
 
     {% render_table table %}
 
+    {% include "customer_service/send_sms_dialog.html" with dialog_id="send-sms-dialog" %}
     {% include "bsmodals/confirm.html" %}
     {% include "bsmodals/error.html" %}
     {% include "bsmodals/alert.html" %}
@@ -25,7 +26,7 @@
 
 {% block javascript %}
     <script src="/static/bsmodals/bsmodals.js"></script>
-    {#    <script src="/static/bsmodals/restapi.js"></script>#}
+    <script src="/static/bsmodals/restapi.js"></script>
 
     <script>
         {# From Django doc #}
@@ -46,11 +47,11 @@
             return cookieValue;
         }
 
-        var csrftoken = getCookie('csrftoken');
-        var urlMessageCreate = $('#message-sms-url').attr('data-url');
+        const csrftoken = getCookie('csrftoken');
+        const urlMessageCreate = $('#message-sms-url').attr('data-url');
 
         function getDataAjax(url) {
-            var result = '';
+            let result = '';
             $.ajax({
                 method: 'GET',
                 url: url,
@@ -87,25 +88,26 @@
         {#    return res;#}
 
         $("table.table > tbody > tr").delegate('td', 'click', function (event) {
-            var yes = '✔';
-            var no = '❌';
-            var td = $(this);
-            var thisTdClass = td.attr('class');
-            var resultAfterTheCall = ['is_reinsured', 'is_reinsured_another_company', 'is_impossible_to_call',
+            let yes = '✔';
+            let no = '❌';
+            let td = $(this);
+            let thisTdClass = td.attr('class');
+            let resultAfterTheCall = ['is_reinsured', 'is_reinsured_another_company', 'is_impossible_to_call',
                 'is_called_will_insure', 'is_called_will_not_insure'];
 
-            var numberPolicy = td.parent('tr').find('td.number').text();
-            var end_datePolicy = td.parent('tr').find('td.end_date').text();
+            let idPolicy = td.parent('tr').attr('data-id');
+            let numberPolicy = td.parent('tr').find('td.number').text();
+            let customerPolicy = td.parent('tr').find('td.customer').text();
+            let end_datePolicy = td.parent('tr').find('td.end_date').text();
 
-            var thisButton = $(this).find('button');
+            let thisButton = $(this).find('button');
 
             if (resultAfterTheCall.includes(thisTdClass)) {
                 bsmodals_confirm('Policy ' + numberPolicy + ' update',
                     'Are you sure you want to update the policy ?', function (result) {
                         if (result) {
-                            //var policyId = $(this).parent('tr').attr('data-id');
-                            var dataUrlPolicy = td.parent('tr').attr('data-url');
-                            var data = getDataAjax(dataUrlPolicy);
+                            let dataUrlPolicy = td.parent('tr').attr('data-url');
+                            let data = getDataAjax(dataUrlPolicy);
 
                             data[thisTdClass] = td.find('span').attr('class') !== 'true';
 
@@ -133,34 +135,110 @@
                         }
                     }, yes_text = 'YES', yes_style = 'btn-success', no_text = 'NO', no_style = 'btn-secondary'
                 );
-            } else if (thisButton.attr('class', 'send_sms')) {
-                bsmodals_confirm('Customer policy expires on ' + end_datePolicy,
-                    'Are you sure you want to send the sms?', function (result) {
-                        if (result) {
-                            var policyId = td.parent('tr').attr('data-id');
-                            $.ajax({
-                                method: 'POST',
-                                url: urlMessageCreate,
-                                beforeSend: function (xhr) {
-                                    xhr.setRequestHeader("X-CSRFToken", csrftoken)
-                                },
-                                data: {
-                                    {#"body": "Hello ...",#}
-                                    "insurance_policy": policyId
-                                },
-                            })
-                                .done(function (data, status, jqXHR) {
-                                        {#console.log('jqXHR: ', jqXHR.status);#}
-                                        bsmodals_alert('Hi', 'Done')
-                                    }
-                                )
-                                .fail(function (data) {
-                                    bsmodals_error(data.statusText, "btn-warning");
-                                })
-                        }
-                    }, yes_text = 'YES', yes_style = 'btn-success', no_text = 'NO',
-                    no_style = 'btn-secondary');
             }
+            {#else if (thisButton.attr('class', 'send_sms')) {#}
+            {#bsmodals_confirm(titleModals, msgModals, function (result) {#}
+            {#        if (result) {#}
+            {#            $.ajax({#}
+            {#                method: 'POST',#}
+            {#                url: urlMessageCreate,#}
+            {#                beforeSend: function (xhr) {#}
+            {#                    xhr.setRequestHeader("X-CSRFToken", csrftoken)#}
+            {#                },#}
+            {#                data: {#}
+            {#"body": "Hello ...",#}
+            {#                    "insurance_policy": idPolicy#}
+            {#                },#}
+            {#            })#}
+            {#                .done(function (data, status, jqXHR) {#}
+            {#console.log('jqXHR: ', jqXHR.status);#}
+            {#                        bsmodals_alert('Success!', 'The message was sent successfuly')#}
+            {#                    }#}
+            {#                )#}
+            {#                .fail(function (data) {#}
+            {#                    bsmodals_error(data.statusText, "btn-warning");#}
+            {#                })#}
+            {#        }#}
+            {#    }, yes_text = 'YES', yes_style = 'btn-success', no_text = 'NO',#}
+            {#    no_style = 'btn-secondary');#}
+
+
+            if ($(this).find('.send_sms')) {
+                let messageSendSms = "".concat(customerPolicy, ', ', 'insurance policy', ' ', numberPolicy, ' ', 'expires on', ' ', end_datePolicy)
+                let msgModals = 'Are you sure you want to send the sms?'
+
+                {#bsmodals_confirm(messageSendSms, msgModals, function (result) {#}
+                {#            if (result) {#}
+                {#                $.ajax({#}
+                {#                    method: 'POST',#}
+                {#                    url: urlMessageCreate,#}
+                {#                    beforeSend: function (xhr) {#}
+                {#                        xhr.setRequestHeader("X-CSRFToken", csrftoken)#}
+                {#                    },#}
+                {#                    data: {#}
+                {#                        "body": messageSendSms,#}
+                {#                        "insurance_policy": idPolicy#}
+                {#                    },#}
+                {#                })#}
+                {#                    .done(function (data, status, jqXHR) {#}
+                {#                            console.log('jqXHR: ', jqXHR.status);#}
+                {#                            bsmodals_alert('Success!', 'The message was sent successfuly')#}
+                {#                        }#}
+                {#                    )#}
+                {#                    .fail(function (data) {#}
+                {#                        bsmodals_error(data.statusText, "btn-warning");#}
+                {#                    })#}
+                {#            }#}
+                {#        }, yes_text = 'YES', yes_style = 'btn-success', no_text = 'NO',#}
+                {#        no_style = 'btn-secondary');#}
+
+
+                let sendSmsDialog = new FormModal('send-sms-dialog');
+                let data = {
+                    'number_policy': numberPolicy,
+                    'customer': customerPolicy,
+                    'message_send_sms': messageSendSms
+                }
+                sendSmsDialog.show(data);
+
+                $('#send-sms-dialog-close').click(function () {
+                    console.debug('Click on button Close');
+                });
+
+                $('#send-sms-dialog-update').click(function () {
+                    console.debug('Click on button Update');
+                    console.debug(sendSmsDialog.dialog_id);
+                    let msgAfterUpdate = sendSmsDialog.modal.find('#message_send_sms').val();
+
+                    bsmodals_confirm(msgAfterUpdate, msgModals, function (result) {
+                            if (result) {
+                                $.ajax({
+                                    method: 'POST',
+                                    url: urlMessageCreate,
+                                    beforeSend: function (xhr) {
+                                        xhr.setRequestHeader("X-CSRFToken", csrftoken)
+                                    },
+                                    data: {
+                                        "body": msgAfterUpdate,
+                                        "insurance_policy": idPolicy
+                                    },
+                                })
+                                    .done(function (data, status, jqXHR) {
+                                            console.log('jqXHR: ', jqXHR.status);
+                                            bsmodals_alert('Success!', 'The message was sent successfuly')
+                                        }
+                                    )
+                                    .fail(function (data) {
+                                        bsmodals_error(data.statusText, "btn-warning");
+                                    })
+                            }
+                        }, yes_text = 'YES', yes_style = 'btn-success', no_text = 'NO',
+                        no_style = 'btn-secondary');
+
+                });
+            }
+
+
         });
 
     </script>

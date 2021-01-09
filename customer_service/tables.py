@@ -13,6 +13,7 @@ class InsurancePolicyTable(tables.Table):
                                attrs={'td': {'class': 'number'}})
 
     end_date = tables.DateColumn(attrs={'td': {'class': 'end_date'}})
+    customer = tables.Column(attrs={'td': {'class': 'customer'}})
     is_reinsured = tables.Column(attrs={'td': {'class': 'is_reinsured'}})
     is_reinsured_another_company = tables.Column(
         attrs={'td': {'class': 'is_reinsured_another_company'}})
