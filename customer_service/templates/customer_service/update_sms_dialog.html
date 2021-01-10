@@ -5,7 +5,7 @@
 {#{% endblock title %}#}
 
 {% block body %}
-    <h5 id="send-sms-dialog-title">Update message SMS</h5>
+    <h5 id="update-sms-dialog-title">Update message SMS</h5>
 
     <form>
         <div class="form-group">
@@ -15,13 +15,13 @@
             <label for="number_policy" class="col-form-label">Insurance Policy</label>
             <input type="text" class="form-control" id="number_policy" name="number_policy">
 
-            <label for="message_send_sms" class="col-form-label">Message</label>
-            <textarea id="message_send_sms" class="form-control" name="message_send_sms" rows="5"></textarea>
+            <label for="message_sms" class="col-form-label">Message</label>
+            <textarea id="message_sms" class="form-control" name="message_sms" rows="5"></textarea>
         </div>
     </form>
 {% endblock body %}
 
 {% block footer %}
-    <button id="send-sms-dialog-update" type="submit" data-dismiss="modal" class="submit-btn btn btn-primary">Update</button>
-    <button id="send-sms-dialog-close" type="button" data-dismiss="modal" class="btn btn-primary">Close</button>
+    <button id="update-sms-dialog-close" type="button" data-dismiss="modal" class="btn btn-secondary">CLOSE</button>
+    <button id="update-sms-dialog-ok" type="button" data-dismiss="modal" class="submit-btn btn btn-success">OK</button>
 {% endblock footer %}

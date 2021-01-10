@@ -32,21 +32,10 @@ class MessageSmsInsurancePolicyExpiresListCreateAPIView(ListCreateAPIView):
     queryset = MessageSmsInsurancePolicyExpires.objects.all()
 
     def post(self, request, *args, **kwargs):
+        # message = CreateMessage(account_sid=ACCOUNT_SID, auth_token=AUTH_TOKEN)
+        # sid = message.create(from_=FROM_, to=TO, body_message=request.data['body'])
         if isinstance(request.data, QueryDict):
             request.data._mutable = True
-        insurance_policy = InsurancePolicy.objects.get(
-            pk=request.data['insurance_policy'])
-
-        try:
-            customer = insurance_policy.customer
-        except:
-            customer = None
-
-        body_message = f'{customer.name}, your policy {insurance_policy.number} expires on {insurance_policy.end_date}'
-        message = CreateMessage(account_sid=ACCOUNT_SID, auth_token=AUTH_TOKEN)
-        sid = message.create(from_=FROM_, to=TO, body_message=body_message)
-
-        request.data.update({'sid': sid,
-                             'body': body_message})
-        print(request.data)
+        # request.data.update({'sid': sid})
+        request.data.update({'sid': 'asdfasdfasdfasdfadfasdf'})
         return self.create(request, *args, **kwargs)

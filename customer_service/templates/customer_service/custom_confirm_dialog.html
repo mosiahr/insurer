@@ -1,0 +1,19 @@
+{% extends "bsmodals/generic.html" %}
+
+{% block body %}
+    <h5 id="custom-confirm-dialog-title"></h5>
+
+    <label for="custom-confirm-dialog-msg-body" class="col-form-label">Message</label>
+    <textarea readonly id="custom-confirm-dialog-msg-body" class="form-control"
+              name="custom-confirm-dialog-msg-body" rows="5"></textarea>
+
+    <br>
+    <p id="custom-confirm-dialog-msg-extra"></p>
+{% endblock body %}
+
+{% block footer %}
+    <button id="custom-confirm-dialog-update" type="button" class="btn btn-danger">Update</button>
+    <button id="custom-confirm-dialog-no" type="button" class="btn btn-secondary">No</button>
+    <button id="custom-confirm-dialog-yes" type="button" class="btn btn-primary">Yes</button>
+{% endblock footer %}
+
