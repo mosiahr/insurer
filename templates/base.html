@@ -1,5 +1,10 @@
 {% load static %}
 {% load bootstrap4 %}
+{% load tags %}
+
+{% url 'customer_service:policies' as policies %}
+{% url 'customer_service:messages' as messages %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,12 +23,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="{% url 'customer_service:policies' %}">Policies<span
-                    class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="#">Features</a>
-            <a class="nav-item nav-link" href="#">Pricing</a>
-            <a class="nav-item nav-link disabled" href="#" tabindex="-1"
-               aria-disabled="true">Disabled</a>
+            <a class="nav-item nav-link {% active request policies %}" href="{% url 'customer_service:policies' %}">Policies</a>
+            <a class="nav-item nav-link {% active request messages %}" href="{% url 'customer_service:messages' %}">Messages</a>
         </div>
     </div>
 </nav>
@@ -37,14 +38,12 @@
 <footer class="page-footer font-small blue">
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2020 Copyright:
-        <a href="#"> Insurer</a>
-    </div>
+    <div class="footer-copyright text-center py-3">© 2020 Copyright: <a href="https://github.com/mosiahr">Hryhorii
+        Mosia</a></div>
     <!-- Copyright -->
 
 </footer>
 <!-- Footer -->
-
 
 {% block javascript %}{% endblock %}
 

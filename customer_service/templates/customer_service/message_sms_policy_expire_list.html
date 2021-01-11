@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load i18n %}
+{% load render_table from django_tables2 %}
+
+
+{% block title %}Messages{% endblock %}
+
+{% block content %}
+    <h5 class="p-3 mb-2 bg-light-blacker">Messages</h5>
+
+    {% render_table table %}
+
+{% endblock %}

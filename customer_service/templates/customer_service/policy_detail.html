@@ -4,11 +4,10 @@
 {% block title %}{{ policy.number }}{% endblock %}
 
 {% block content %}
-    <div class="h3 p-3 mb-2 bg-dark text-white">{{ policy.number }}
-        <span class="badge badge-pill badge-secondary">Policy detail</span></div>
-
     <!-- Result after the call to the customer -->
-    <h4 id="result-after-call" data-insurance-policy-update-url="{% url 'api-customer-service:api-insurance-policy-update' pk=policy.id %}">
+    <h5 class="p-3 mb-2 bg-light-blacker" id="result-after-call"
+        data-insurance-policy-update-url="{% url 'api-customer-service:api-insurance-policy-update' pk=policy.id %}">
+        {{ policy.number }}
         <a href="#" id="is_reinsured"
            class="badge badge-{% if policy.is_reinsured %}success{% else %}secondary{% endif %}"> {% trans 'Reinsured' %}</a>
         <a href="#" id="is_reinsured_another_company"
@@ -19,61 +18,85 @@
            class="badge badge-{% if policy.is_called_will_insure %}success{% else %}secondary{% endif %}"> {% trans 'Was called and will insure' %}</a>
         <a href="#" id="is_called_will_not_insure"
            class="badge badge-{% if policy.is_called_will_not_insure %}success{% else %}secondary{% endif %}"> {% trans 'Was called and will not insure' %}</a>
-    </h4>
+    </h5>
 
     <div class="row">
 
         <!-- Policy information -->
         <div class="col-sm">
-            <div class="pl-3 mb-1 bg-info text-white">Policy information</div>
+            <div class="pl-3 mb-1 bg-secondary text-white">Policy information</div>
             {% if policy.sticker %}
-                <div class="p-2 mb-2 bg-dark text-white"><small>Sticker: </small>{{ policy.sticker }}</div>
+                <div class="p-2 mb-2 bg-light-blacker text-white"><small>Sticker: </small><br>{{ policy.sticker }}</div>
             {% endif %}
-            <div class="p-3 mb-2 bg-dark text-white"><small>Registration Date: </small>{{ policy.registration_date }}
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Registration
+                Date: </small><br>{{ policy.registration_date }}
             </div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Begin Date: </small>{{ policy.begin_date }}</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>End Date: </small>{{ policy.end_date }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Begin Date: </small><br>{{ policy.begin_date }}
+            </div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>End Date: </small><br>{{ policy.end_date }}</div>
 
-            <div class="p-3 mb-2 bg-dark text-white"><small>Insurance Code: </small>{{ policy.insurance_code }}</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Sum Insured: </small>{{ policy.sum_insured }}</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Price: </small>{{ policy.price }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Insurance
+                Code: </small><br>{{ policy.insurance_code }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Sum Insured: </small><br>{{ policy.sum_insured }}
+            </div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Price: </small><br>{{ policy.price }}</div>
 
             {% if policy.bonus %}
-                <div class="p-3 mb-2 bg-dark text-white"><small>Bonus: </small>{{ policy.bonus }}</div>
+                <div class="p-3 mb-2 bg-light-blacker text-body"><small>Bonus: </small><br>{{ policy.bonus }}</div>
             {% endif %}
 
-            <div class="p-3 mb-2 bg-dark text-white"><small>Territory: </small>{{ policy.territory }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Territory: </small><br>{{ policy.territory }}</div>
         </div>
 
         <!-- Customer information -->
         <div class="col-sm">
-            <div class="pl-3 mb-1 bg-info text-white">Customer information</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Customer: </small>{{ policy.customer.name }}</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Ind Number: </small>{{ policy.customer.ind_number }}</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Address: </small>{{ policy.customer.address }}</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Country: </small>{{ policy.customer.country }}</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Phone: </small>{{ policy.customer.phone }}</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Customer Type: </small>{{ policy.customer.customer_type }}
+            <div class="pl-3 mb-1 bg-secondary text-white">Customer information</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Customer: </small><br>{{ policy.customer.name }}
+            </div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Ind
+                Number: </small><br>{{ policy.customer.ind_number }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Address: </small><br>{{ policy.customer.address }}
+            </div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Country: </small><br>{{ policy.customer.country }}
+            </div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Phone: </small><br>{{ policy.customer.phone }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Customer
+                Type: </small><br>{{ policy.customer.customer_type }}
             </div>
         </div>
 
         <!-- Car information -->
         <div class="col-sm">
-            <div class="pl-3 mb-1 bg-info text-white">Car information</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Mark: </small>{{ policy.car.mark }}</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Model: </small>{{ policy.car.model }}</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Registration
-                Place: </small>{{ policy.car.registration_place }}</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Registration
-                Country: </small>{{ policy.car.registration_country }}</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Registration
-                Number: </small>{{ policy.car.registration_number }}</div>
-            <div class="p-3 mb-2 bg-dark text-white"><small>Vin Code: </small>{{ policy.car.vin_code }}</div>
+            <div class="pl-3 mb-1 bg-secondary text-white">Car information</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Mark: </small><br>{{ policy.car.mark }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Model: </small><br>{{ policy.car.model }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Registration
+                Place: </small><br>{{ policy.car.registration_place }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Registration
+                Country: </small><br>{{ policy.car.registration_country }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Registration
+                Number: </small><br>{{ policy.car.registration_number }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body"><small>Vin Code: </small><br>{{ policy.car.vin_code }}
+            </div>
         </div>
+
+        <!-- Message information -->
+        <div class="col-sm">
+            <div class="pl-3 mb-1 bg-secondary text-white">SMS Message information</div>
+            {% for message in  sms_messages %}
+                <div class="p-3 mb-2 bg-light-blacker text-body">
+                    {{ message.created }}<br>
+                    {{ message.body }}
+                </div>
+            {% endfor %}
+        </div>
+
     </div>
 {% endblock %}
 
 {% block javascript %}
+    {{ block.super }}
+
     <script>
         var urlApiInsurancePolicyUpdate = $('#result-after-call').attr('data-insurance-policy-update-url');
 

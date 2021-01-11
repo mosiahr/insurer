@@ -5,3 +5,7 @@ td > a:hover {
 #message-sms-url {
     display: none;
 }
+
+.bg-light-blacker {
+    background: rgba(0, 0, 0, 0.05);
+}

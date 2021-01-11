@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 import django_tables2 as tables
 from django_tables2.utils import A  # alias for Accessor
 
-from .models import InsurancePolicy
+from .models import InsurancePolicy, MessageSmsInsurancePolicyExpires
 
 
 class InsurancePolicyTable(tables.Table):
@@ -70,3 +70,12 @@ class InsurancePolicyTable(tables.Table):
 
     def render_is_called_will_not_insure(self, value):
         return self.result_after_the_call(value)
+
+
+class MessageSmsInsurancePolicyExpiresTable(tables.Table):
+    class Meta:
+        model = MessageSmsInsurancePolicyExpires
+        template_name = 'django_tables2/bootstrap4.html'
+        fields = ('id', 'created', 'body', 'sid')
+        order_by = ('-id',)
+

@@ -5,7 +5,7 @@
 {% block title %}Polices{% endblock %}
 
 {% block content %}
-    <h2>Policies</h2>
+    <h5 class="p-3 mb-2 bg-light-blacker">Policies</h5>
     {% if filter %}
         {{ filter.form.media }}
         <form action="" method="get" class="form form-inline">
@@ -26,6 +26,8 @@
 {% endblock %}
 
 {% block javascript %}
+    {{ block.super }}
+
     <script src="/static/bsmodals/bsmodals.js"></script>
     <script src="/static/bsmodals/restapi.js"></script>
 
