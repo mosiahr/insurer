@@ -11,7 +11,9 @@
         <form action="" method="get" class="form form-inline">
             {% bootstrap_form filter.form layout='inline' %}
             {% bootstrap_button 'Filter' %}
+            <a class="btn btn-warning" href="{% url 'customer_service:policies' %}">Reset</a>
         </form>
+        {% bootstrap_form_errors filter.form layout='inline' %}
     {% endif %}
 
     {% render_table table %}
@@ -22,7 +24,7 @@
     {% include "bsmodals/error.html" %}
     {% include "bsmodals/alert.html" %}
 
-    <p id="message-sms-url" data-url="{{ message_sms_url }}"></p>
+    <p id="message-sms-url" data-url="{% url 'api-customer-service:api-message-sms-create' %}"></p>
 {% endblock %}
 
 {% block javascript %}
@@ -33,6 +35,7 @@
 
     <script>
         {# From Django doc #}
+
         function getCookie(name) {
             var cookieValue = null;
             if (document.cookie && document.cookie != '') {

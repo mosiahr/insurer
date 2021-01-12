@@ -76,6 +76,6 @@ class MessageSmsInsurancePolicyExpiresTable(tables.Table):
     class Meta:
         model = MessageSmsInsurancePolicyExpires
         template_name = 'django_tables2/bootstrap4.html'
-        fields = ('id', 'created', 'body', 'sid')
+        fields = ('id', 'created', 'sid', 'body', 'insurance_policy')
         order_by = ('-id',)
 

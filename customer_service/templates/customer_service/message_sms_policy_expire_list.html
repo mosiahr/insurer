@@ -3,11 +3,20 @@
 {% load i18n %}
 {% load render_table from django_tables2 %}
 
-
 {% block title %}Messages{% endblock %}
 
 {% block content %}
     <h5 class="p-3 mb-2 bg-light-blacker">Messages</h5>
+
+    {% if filter %}
+        {{ filter.form.media }}
+        <form action="" method="get" class="form form-inline">
+            {% bootstrap_form filter.form layout='inline' %}
+            {% bootstrap_button 'Filter' %}
+            <a class="btn btn-warning" href="{% url 'customer_service:messages' %}">Reset</a>
+        </form>
+        {% bootstrap_form_errors filter.form layout='inline' %}
+    {% endif %}
 
     {% render_table table %}
 

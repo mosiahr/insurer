@@ -1,13 +1,11 @@
 from django.db import models
-from django import forms
 
 import django_filters
+from django_filters.widgets import DateRangeWidget
 from bootstrap_datepicker_plus import DatePickerInput
-from django_filters import DateFromToRangeFilter, DateRangeFilter
-from django_filters.widgets import RangeWidget
 
 from insurer.settings import DATE_INPUT_FORMAT
-from .models import InsurancePolicy, Customer
+from .models import InsurancePolicy, MessageSmsInsurancePolicyExpires
 
 
 class InsurancePolicyFilter(django_filters.FilterSet):
@@ -17,10 +15,9 @@ class InsurancePolicyFilter(django_filters.FilterSet):
     car = django_filters.CharFilter(field_name='car',
                                     method='filter_car')
 
-    # end_date = DateFromToRangeFilter(
-    #     widget=RangeWidget(attrs={'placeholder': 'DD.MM.YYYY'}))
-
-    # end_date = DateRangeFilter()
+    end_date = django_filters.DateFromToRangeFilter(
+        widget=DateRangeWidget(attrs={'type': 'date'})
+    )
 
     def filter_customer(self, queryset, name, value):
         return queryset.filter(customer__name__icontains=value)
@@ -41,3 +38,19 @@ class InsurancePolicyFilter(django_filters.FilterSet):
                 },
             },
         }
+
+
+class MessageSmsInsurancePolicyExpiresFilter(django_filters.FilterSet):
+    insurance_policy = django_filters.CharFilter(field_name='insurance_policy',
+                                                 method='filter_insurance_policy')
+
+    created = django_filters.DateFromToRangeFilter(
+        widget=DateRangeWidget(attrs={'type': 'date'})
+    )
+
+    class Meta:
+        model = MessageSmsInsurancePolicyExpires
+        fields = ['created', 'sid', 'body', 'insurance_policy']
+
+    def filter_insurance_policy(self, queryset, name, value):
+        return queryset.filter(insurance_policy__number__icontains=value)

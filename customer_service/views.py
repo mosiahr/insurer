@@ -7,8 +7,9 @@ from django_filters.views import FilterView
 
 from .models import InsurancePolicy, MessageSmsInsurancePolicyExpires
 from .tables import InsurancePolicyTable, MessageSmsInsurancePolicyExpiresTable
-from .forms import InsurancePolicyForm
-from .filters import InsurancePolicyFilter
+from .forms import InsurancePolicyForm, MessageSmsInsurancePolicyExpiresForm
+from .filters import InsurancePolicyFilter, \
+    MessageSmsInsurancePolicyExpiresFilter
 
 
 class InsurancePolicyView(SingleTableMixin, FilterView):
@@ -24,12 +25,6 @@ class InsurancePolicyView(SingleTableMixin, FilterView):
     template_name = 'customer_service/policies.html'
     context_object_name = 'policies'
     filterset_class = InsurancePolicyFilter
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        message_sms_url = reverse('api-customer-service:api-message-sms-create')
-        context.update({'message_sms_url': message_sms_url})
-        return context
 
 
 class InsurancePolicyDetailView(DetailView):
@@ -51,22 +46,23 @@ class InsurancePolicyDetailView(DetailView):
         insurance_policy = self.get_object()
         if insurance_policy:
             context.update(
-                {'sms_messages': MessageSmsInsurancePolicyExpires.objects.filter(
-                    insurance_policy=insurance_policy.id)})
+                {
+                    'sms_messages': MessageSmsInsurancePolicyExpires.objects.filter(
+                        insurance_policy=insurance_policy.id)})
         return context
 
 
-class MessageSmsInsurancePolicyExpiresView(SingleTableMixin, ListView):
+class MessageSmsInsurancePolicyExpiresView(SingleTableMixin, FilterView):
     """
     Render list of sms messages those were sent to customers to notify them that
     insurance policy is ending.
     """
-    # form_class = InsurancePolicyForm
+    form_class = MessageSmsInsurancePolicyExpiresForm
     model = MessageSmsInsurancePolicyExpires
     table_class = MessageSmsInsurancePolicyExpiresTable
     template_name = 'customer_service/message_sms_policy_expire_list.html'
     context_object_name = 'sms_messages'
-    # filterset_class = InsurancePolicyFilter
+    filterset_class = MessageSmsInsurancePolicyExpiresFilter
 
 
 class MessageSmsInsurancePolicyExpiresDetailView(DetailView):
