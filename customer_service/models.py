@@ -1,11 +1,11 @@
 import csv
-import datetime
 import re
+import datetime
 from decimal import Decimal
 
 from django.db import models
 from django.utils.translation import ugettext as _
-from django.utils import timezone
+from django.utils import timezone as django_timezone
 from django.core.exceptions import ObjectDoesNotExist
 
 from phonenumber_field.modelfields import PhoneNumberField
@@ -27,7 +27,7 @@ User = get_user_model()
 
 class MainAbstractModel(models.Model):
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created = models.DateTimeField(default=timezone.now())
+    created = models.DateTimeField(default=django_timezone.now)
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
