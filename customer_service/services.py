@@ -12,8 +12,6 @@ class CreateMessage:
                 from_=from_,
                 to=to,
                 body=body_message)
-            sid = message.sid
-            print("Status: ", message.status)
-            return sid
+            return message.sid
         except TwilioRestException as e:
             print(e)

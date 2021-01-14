@@ -159,3 +159,6 @@ CORS_URLS_REGEX = r'^/api/.*$'
 
 # django-phonenumber-field
 PHONENUMBER_DEFAULT_REGION = 'UA'
+
+# Twilio
+SEND_SMS_MESSAGE = False
