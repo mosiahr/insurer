@@ -15,6 +15,11 @@
     <title>{% block title %}{% endblock %} | INSURER</title>
 </head>
 <body>
+<div id="loading" class="text-center">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Insurer</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -35,17 +40,34 @@
 </div>
 
 <!-- Footer -->
-<footer class="page-footer font-small blue">
-
+<footer id="footer" class="page-footer bg-light-blacker">
     <!-- Copyright -->
+    {#        <span class="content-center py-3">© 2020 Copyright: <a href="https://github.com/mosiahr">Hryhorii Mosia</a></span>#}
     <div class="footer-copyright text-center py-3">© 2020 Copyright: <a href="https://github.com/mosiahr">Hryhorii
         Mosia</a></div>
     <!-- Copyright -->
-
 </footer>
 <!-- Footer -->
 
+
 {% block javascript %}{% endblock %}
+<script>
+    $(document).ready(function () {
+
+        $(window).on('load', function () {
+            $('#loading').fadeOut('slow');
+        })
+
+        var docHeight = $(window).height();
+        var footerHeight = $('#footer').height();
+        var footerTop = $('#footer').position().top + footerHeight;
+
+        if (footerTop < docHeight)
+            $('#footer').css('margin-top', 10 + (docHeight - footerTop) + 'px');
+
+    });
+
+</script>
 
 </body>
 </html>

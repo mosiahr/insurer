@@ -117,14 +117,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 # LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'uk-uk'
+LANGUAGE_CODE = 'uk'
 
 # TIME_ZONE = 'UTC'
 TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 
@@ -144,9 +144,15 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-DATE_INPUT_FORMATS = ['%d.%m.%Y']
-DATE_INPUT_FORMAT = '%d.%m.%Y'
-DATE_TIME_INPUT_FORMAT = '%d.%m.%Y HH:MM'
+DATE_FORMAT = 'd.m.Y'
+SHORT_DATE_FORMAT = 'd.m.Y'  # It is used in django-tables2
+DATETIME_FORMAT = 'd.m.Y H:i'
+SHORT_DATETIME_FORMAT = 'd.m.Y H:i'  # It is used in django-tables2
+
+DATE_INPUT_FORMAT_UA = '%d.%m.%Y'
+DATE_INPUT_FORMATS = [DATE_INPUT_FORMAT_UA]
+DATETIME_INPUT_FORMATS = ['%d.%m.%Y %H:%M']
+TIME_INPUT_FORMATS = ['%H:%M']
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
 
@@ -159,6 +165,16 @@ CORS_URLS_REGEX = r'^/api/.*$'
 
 # django-phonenumber-field
 PHONENUMBER_DEFAULT_REGION = 'UA'
+
+# Default settings
+# BOOTSTRAP4 = {
+#     # The URL to the Popper.js JavaScript file (slim)
+#     "popper_url": {
+#         "url": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js",
+#         "integrity": "sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49",
+#         "crossorigin": "anonymous",
+#     },
+# }
 
 # Twilio
 SEND_SMS_MESSAGE = False

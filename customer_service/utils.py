@@ -1,7 +1,7 @@
 import uuid
 
 
-def gen_uuid(prefix):
+def generation_uuid(prefix):
     """
     Generate the UUID as a prefix and a 32-character hexadecimal string
     Example:

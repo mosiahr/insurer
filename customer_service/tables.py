@@ -32,8 +32,7 @@ class InsurancePolicyTable(tables.Table):
     class Meta:
         model = InsurancePolicy
         template_name = 'django_tables2/bootstrap4.html'
-        fields = ('id', 'number', 'registration_date', 'begin_date', 'end_date',
-                  'customer', 'car', 'insurance_code', 'price',
+        fields = ('id', 'number', 'end_date', 'customer', 'car', 'price',
                   'is_reinsured', 'is_reinsured_another_company',
                   'is_impossible_to_call', 'is_called_will_insure',
                   'is_called_will_not_insure')
@@ -46,7 +45,7 @@ class InsurancePolicyTable(tables.Table):
         }
 
     def render_price(self, value):
-        return f'{value} грн.'
+        return value
 
     def render_territory(self, value):
         return str(value)[:15]
@@ -73,9 +72,12 @@ class InsurancePolicyTable(tables.Table):
 
 
 class MessageSmsInsurancePolicyExpiresTable(tables.Table):
+    created = tables.DateColumn(verbose_name=_('Sent'))
+    body = tables.Column(verbose_name=_('SMS text'))
+
     class Meta:
         model = MessageSmsInsurancePolicyExpires
         template_name = 'django_tables2/bootstrap4.html'
-        fields = ('id', 'created', 'sid', 'body', 'insurance_policy')
+        fields = ('id', 'created', 'sid', 'insurance_policy', 'body')
         order_by = ('-id',)
 

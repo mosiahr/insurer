@@ -1,19 +1,25 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
+{% load i18n %}
 {% load render_table from django_tables2 %}
-
-{% block title %}Polices{% endblock %}
+{% block title %}{% translate 'Policies' %}{% endblock %}
 
 {% block content %}
-    <h5 class="p-3 mb-2 bg-light-blacker">Policies</h5>
     {% if filter %}
         {{ filter.form.media }}
-        <form action="" method="get" class="form form-inline">
-            {% bootstrap_form filter.form layout='inline' %}
-            {% bootstrap_button 'Filter' %}
-            <a class="btn btn-warning" href="{% url 'customer_service:policies' %}">Reset</a>
-        </form>
-        {% bootstrap_form_errors filter.form layout='inline' %}
+        <h5 class="p-2 bg-light-blacker text-left">
+            <form id="policies-filter" action="" method="get" class="form form-inline">
+                {% csrf_token %}
+                {% bootstrap_label content=_('Policies') label_class='pr-2' %}
+                {% bootstrap_form filter.form size='small' layout='inline' %}
+
+                <div class="form-group">
+                    {% bootstrap_button content='Reset' button_type='reset' size='small' button_class='btn-secondary' extra_classes='m-1' %}
+                    {% bootstrap_button content='OK' button_type='submit' size='small' button_class='btn-secondary' %}
+                </div>
+                {% bootstrap_form_errors filter.form layout='inline' %}
+            </form>
+        </h5>
     {% endif %}
 
     {% render_table table %}
@@ -34,6 +40,13 @@
     <script src="/static/bsmodals/restapi.js"></script>
 
     <script>
+
+        $('#policies-filter').find(':reset').on('click', function (e) {
+            e.preventDefault();
+            $('#policies-filter').find(':input[type="number"]').val('');
+            $('#policies-filter').find(':input[type="text"]').val('');
+        })
+
         {# From Django doc #}
 
         function getCookie(name) {

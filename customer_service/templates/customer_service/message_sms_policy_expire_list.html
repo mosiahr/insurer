@@ -3,21 +3,36 @@
 {% load i18n %}
 {% load render_table from django_tables2 %}
 
-{% block title %}Messages{% endblock %}
+{% block title %}{% translate 'Messages' %}{% endblock %}
 
 {% block content %}
-    <h5 class="p-3 mb-2 bg-light-blacker">Messages</h5>
-
     {% if filter %}
         {{ filter.form.media }}
-        <form action="" method="get" class="form form-inline">
-            {% bootstrap_form filter.form layout='inline' %}
-            {% bootstrap_button 'Filter' %}
-            <a class="btn btn-warning" href="{% url 'customer_service:messages' %}">Reset</a>
-        </form>
-        {% bootstrap_form_errors filter.form layout='inline' %}
+        <h5 class="p-2 bg-light-blacker text-left">
+            <form id="sms-message-filter" action="" method="get" class="form form-inline">
+                {% csrf_token %}
+                {% bootstrap_label content=_('SMS messages') label_class='pr-2' %}
+                {% bootstrap_form filter.form size='small' layout='inline' %}
+
+                <div class="form-group">
+                    {% bootstrap_button content='Reset' button_type='reset' size='small' button_class='btn-secondary' extra_classes='m-1' %}
+                    {% bootstrap_button content='OK' button_type='submit' size='small' button_class='btn-secondary' %}
+                </div>
+                {% bootstrap_form_errors filter.form layout='inline' %}
+            </form>
+        </h5>
     {% endif %}
 
     {% render_table table %}
 
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $('#sms-message-filter').find(':reset').on('click', function (e) {
+            e.preventDefault();
+            $('#sms-message-filter').find(':input[type="number"]').val('');
+            $('#sms-message-filter').find(':input[type="text"]').val('');
+        })
+    </script>
 {% endblock %}

@@ -7,7 +7,7 @@ from django_filters.views import FilterView
 
 from .models import InsurancePolicy, MessageSmsInsurancePolicyExpires
 from .tables import InsurancePolicyTable, MessageSmsInsurancePolicyExpiresTable
-from .forms import InsurancePolicyForm, MessageSmsInsurancePolicyExpiresForm
+# from .forms import InsurancePolicyForm, MessageSmsInsurancePolicyExpiresForm
 from .filters import InsurancePolicyFilter, \
     MessageSmsInsurancePolicyExpiresFilter
 
@@ -19,7 +19,7 @@ class InsurancePolicyView(SingleTableMixin, FilterView):
     Framework and Twilio.com for send SMS messages to customers to notify them
     that insurance policy is ending.
     """
-    form_class = InsurancePolicyForm
+    # form_class = InsurancePolicyForm
     model = InsurancePolicy
     table_class = InsurancePolicyTable
     template_name = 'customer_service/policies.html'
@@ -57,7 +57,6 @@ class MessageSmsInsurancePolicyExpiresView(SingleTableMixin, FilterView):
     Render list of sms messages those were sent to customers to notify them that
     insurance policy is ending.
     """
-    form_class = MessageSmsInsurancePolicyExpiresForm
     model = MessageSmsInsurancePolicyExpires
     table_class = MessageSmsInsurancePolicyExpiresTable
     template_name = 'customer_service/message_sms_policy_expire_list.html'

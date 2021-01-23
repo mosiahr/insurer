@@ -24,7 +24,7 @@
 
         <!-- Policy information -->
         <div class="col-sm">
-            <div class="pl-3 mb-1 bg-secondary text-white">Policy information</div>
+            <div class="pl-3 mb-1 bg-secondary text-white">{% trans 'Policy information' %}</div>
             {% if policy.sticker %}
                 <div class="p-2 mb-2 bg-light-blacker text-white"><small>Sticker: </small><br>{{ policy.sticker }}</div>
             {% endif %}
@@ -50,7 +50,7 @@
 
         <!-- Customer information -->
         <div class="col-sm">
-            <div class="pl-3 mb-1 bg-secondary text-white">Customer information</div>
+            <div class="pl-3 mb-1 bg-secondary text-white">{% trans 'Customer information' %}</div>
             <div class="p-3 mb-2 bg-light-blacker text-body"><small>Customer: </small><br>{{ policy.customer.name }}
             </div>
             <div class="p-3 mb-2 bg-light-blacker text-body"><small>Ind
@@ -67,7 +67,7 @@
 
         <!-- Car information -->
         <div class="col-sm">
-            <div class="pl-3 mb-1 bg-secondary text-white">Car information</div>
+            <div class="pl-3 mb-1 bg-secondary text-white">{% trans 'Car information' %}</div>
             <div class="p-3 mb-2 bg-light-blacker text-body"><small>Mark: </small><br>{{ policy.car.mark }}</div>
             <div class="p-3 mb-2 bg-light-blacker text-body"><small>Model: </small><br>{{ policy.car.model }}</div>
             <div class="p-3 mb-2 bg-light-blacker text-body"><small>Registration
@@ -82,13 +82,20 @@
 
         <!-- Message information -->
         <div class="col-sm">
-            <div class="pl-3 mb-1 bg-secondary text-white">SMS Message information</div>
-            {% for message in  sms_messages %}
+            <div class="pl-3 mb-1 bg-secondary text-white">{% trans 'SMS Message information' %}</div>
+            {% if sms_messages %}
+                {% for message in  sms_messages %}
+                    <div class="p-3 mb-2 bg-light-blacker text-body">
+                        {{ message.created }}<br>
+                        {{ message.body }}
+                    </div>
+                {% endfor %}
+            {% else %}
                 <div class="p-3 mb-2 bg-light-blacker text-body">
-                    {{ message.created }}<br>
-                    {{ message.body }}
+                    {% trans 'No SMS messages yet' %}
                 </div>
-            {% endfor %}
+            {% endif %}
+
         </div>
 
     </div>

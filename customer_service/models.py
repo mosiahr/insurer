@@ -1,6 +1,5 @@
 import csv
 import re
-import uuid
 import datetime
 from decimal import Decimal
 
@@ -13,9 +12,9 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django_countries.fields import CountryField
 from django.contrib.auth import get_user_model
 
-from customer_service.utils import gen_uuid
+from customer_service.utils import generation_uuid
 from insurer.settings import DEFAULT_COUNTRY_UA, MEDIA_ROOT, \
-    DATE_INPUT_FORMAT, MAX_LENGTH_SID
+    DATE_INPUT_FORMAT_UA
 from insurer.conf import FROM_, TO
 
 User = get_user_model()
@@ -128,7 +127,7 @@ class InsurancePolicy(MainAbstractModel):
 
 
 class DataFile(MainAbstractModel):
-    date_format = DATE_INPUT_FORMAT
+    date_format = DATE_INPUT_FORMAT_UA
     file = models.FileField(upload_to='data_file/%Y/%m/%d')
 
     class Meta:
@@ -220,7 +219,7 @@ class DataFile(MainAbstractModel):
 # MESSAGES
 class MessageAbstractModel(MainAbstractModel):
     sid = models.CharField(max_length=50, unique=True,
-                           default=gen_uuid('SM'))
+                           default=generation_uuid('SM'))
     body = models.TextField(verbose_name=_('Message body'))
 
     class Meta:

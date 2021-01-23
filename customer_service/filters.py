@@ -1,56 +1,115 @@
-from django.db import models
+from django.utils.translation import ugettext as _
+from django.forms.widgets import TextInput
 
 import django_filters
-from django_filters.widgets import DateRangeWidget
 from bootstrap_datepicker_plus import DatePickerInput
 
-from insurer.settings import DATE_INPUT_FORMAT
 from .models import InsurancePolicy, MessageSmsInsurancePolicyExpires
+from insurer.settings import DATE_INPUT_FORMAT_UA
 
 
-class InsurancePolicyFilter(django_filters.FilterSet):
-    customer = django_filters.CharFilter(field_name='customer',
-                                         method='filter_customer')
-
-    car = django_filters.CharFilter(field_name='car',
-                                    method='filter_car')
-
-    end_date = django_filters.DateFromToRangeFilter(
-        widget=DateRangeWidget(attrs={'type': 'date'})
+class BaseFilter(django_filters.FilterSet):
+    insurance_policy = django_filters.CharFilter(
+        label=_('Number insurance policy'),
+        method='filter_insurance_policy',
+        widget=TextInput(
+            attrs={'placeholder': 'AM-0000000', 'autocomplete': 'off'})
     )
 
-    def filter_customer(self, queryset, name, value):
-        return queryset.filter(customer__name__icontains=value)
+    date_after = django_filters.DateFilter(
+        label=_('Date from'),
+        method='filter_date_after',
+        widget=DatePickerInput(
+            format=DATE_INPUT_FORMAT_UA,
+            attrs={'placeholder': _('Date from'), 'autocomplete': 'off'}),
+    )
 
-    def filter_car(self, queryset, name, value):
-        return queryset.filter(car__registration_number__icontains=value)
+    date_before = django_filters.DateFilter(
+        label=_('Date to'),
+        method='filter_date_before',
+        widget=DatePickerInput(
+            format=DATE_INPUT_FORMAT_UA,
+            attrs={'placeholder': _('Date to'), 'autocomplete': 'off'})
+    )
+
+    @classmethod
+    def filter_for_field(cls, field, field_name, lookup_expr=None):
+        print(field, field_name, lookup_expr)
+        _filter = super(BaseFilter, cls).filter_for_field(field, field_name,
+                                                         lookup_expr)
+        _filter.field.widget.attrs.update({'autocomplete': 'off'})
+        return _filter
+
+
+class InsurancePolicyFilter(BaseFilter):
+    customer = django_filters.CharFilter(
+        method='filter_customer',
+        widget=TextInput(
+            attrs={'placeholder': _('Customer'), 'autocomplete': 'off'}))
+
+    car = django_filters.CharFilter(
+        method='filter_car',
+        widget=TextInput(attrs={'placeholder': _('Number of the car'),
+                                'autocomplete': 'off'}))
 
     class Meta:
         model = InsurancePolicy
-        fields = ['number', 'registration_date', 'begin_date', 'end_date',
-                  'customer', 'car', 'insurance_code']
-
-        filter_overrides = {
-            models.DateField: {
-                'filter_class': django_filters.DateFilter,
-                'extra': lambda f: {
-                    'widget': DatePickerInput(format=DATE_INPUT_FORMAT),
-                },
-            },
-        }
-
-
-class MessageSmsInsurancePolicyExpiresFilter(django_filters.FilterSet):
-    insurance_policy = django_filters.CharFilter(field_name='insurance_policy',
-                                                 method='filter_insurance_policy')
-
-    created = django_filters.DateFromToRangeFilter(
-        widget=DateRangeWidget(attrs={'type': 'date'})
-    )
-
-    class Meta:
-        model = MessageSmsInsurancePolicyExpires
-        fields = ['created', 'sid', 'body', 'insurance_policy']
+        fields = ['id', 'insurance_policy', 'date_after', 'date_before',
+                  'customer', 'car']
 
     def filter_insurance_policy(self, queryset, name, value):
+        """
+        Filter by number of insurance policy.
+        __icontains: Case-insensitive containment test.
+        """
+        return queryset.filter(number__icontains=value)
+
+    def filter_customer(self, queryset, name, value):
+        """
+        Filter by customer name.
+        __icontains: Case-insensitive containment test.
+        """
+        return queryset.filter(customer__name__icontains=value)
+
+    def filter_car(self, queryset, name, value):
+        """
+        Filter by car number.
+        __icontains: Case-insensitive containment test.
+        """
+        return queryset.filter(car__registration_number__icontains=value)
+
+    def filter_date_after(self, queryset, name, value):
+        """
+        __gte: Greater than or equal to.
+        """
+        return queryset.filter(end_date__gte=value)
+
+    def filter_date_before(self, queryset, name, value):
+        """
+        __lte: Less than or equal to.
+        """
+        return queryset.filter(end_date__lte=value)
+
+
+class MessageSmsInsurancePolicyExpiresFilter(BaseFilter):
+    class Meta:
+        model = MessageSmsInsurancePolicyExpires
+        fields = ['id', 'date_after', 'date_before', 'sid', 'insurance_policy']
+
+    def filter_insurance_policy(self, queryset, name, value):
+        """
+        __icontains: Case-insensitive containment test.
+        """
         return queryset.filter(insurance_policy__number__icontains=value)
+
+    def filter_date_after(self, queryset, name, value):
+        """
+        __gte: Greater than or equal to.
+        """
+        return queryset.filter(created__gte=value)
+
+    def filter_date_before(self, queryset, name, value):
+        """
+        __lte: Less than or equal to.
+        """
+        return queryset.filter(created__lte=value)
