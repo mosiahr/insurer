@@ -1,25 +1,22 @@
-from django.views.generic import ListView
 from django.views.generic.detail import DetailView
-from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django_tables2 import SingleTableMixin
 from django_filters.views import FilterView
 
 from .models import InsurancePolicy, MessageSmsInsurancePolicyExpires
 from .tables import InsurancePolicyTable, MessageSmsInsurancePolicyExpiresTable
-# from .forms import InsurancePolicyForm, MessageSmsInsurancePolicyExpiresForm
 from .filters import InsurancePolicyFilter, \
     MessageSmsInsurancePolicyExpiresFilter
 
 
-class InsurancePolicyView(SingleTableMixin, FilterView):
+class InsurancePolicyView(LoginRequiredMixin, SingleTableMixin, FilterView):
     """
     Render list of insurance polices. The view has the ability to edit the
     result after calling the customer. Also, the view allows use Django Rest
     Framework and Twilio.com for send SMS messages to customers to notify them
     that insurance policy is ending.
     """
-    # form_class = InsurancePolicyForm
     model = InsurancePolicy
     table_class = InsurancePolicyTable
     template_name = 'customer_service/policies.html'
@@ -27,7 +24,7 @@ class InsurancePolicyView(SingleTableMixin, FilterView):
     filterset_class = InsurancePolicyFilter
 
 
-class InsurancePolicyDetailView(DetailView):
+class InsurancePolicyDetailView(LoginRequiredMixin, DetailView):
     """
     Render a "detail" view of an insurance policy. The view includes:
         - policy information;
@@ -52,7 +49,8 @@ class InsurancePolicyDetailView(DetailView):
         return context
 
 
-class MessageSmsInsurancePolicyExpiresView(SingleTableMixin, FilterView):
+class MessageSmsInsurancePolicyExpiresView(LoginRequiredMixin, SingleTableMixin,
+                                           FilterView):
     """
     Render list of sms messages those were sent to customers to notify them that
     insurance policy is ending.
@@ -64,7 +62,8 @@ class MessageSmsInsurancePolicyExpiresView(SingleTableMixin, FilterView):
     filterset_class = MessageSmsInsurancePolicyExpiresFilter
 
 
-class MessageSmsInsurancePolicyExpiresDetailView(DetailView):
+class MessageSmsInsurancePolicyExpiresDetailView(LoginRequiredMixin,
+                                                 DetailView):
     model = MessageSmsInsurancePolicyExpires
     template_name = 'customer_service/message_sms_policy_expire_datail.html'
     context_object_name = 'message'

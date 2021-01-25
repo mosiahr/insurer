@@ -116,8 +116,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-# LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'uk'
+LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'uk'
 
 # TIME_ZONE = 'UTC'
 TIME_ZONE = 'Europe/Kiev'
@@ -144,6 +144,8 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+LOGIN_REDIRECT_URL = 'customer-service:policies'
+
 DATE_FORMAT = 'd.m.Y'
 SHORT_DATE_FORMAT = 'd.m.Y'  # It is used in django-tables2
 DATETIME_FORMAT = 'd.m.Y H:i'
@@ -165,16 +167,6 @@ CORS_URLS_REGEX = r'^/api/.*$'
 
 # django-phonenumber-field
 PHONENUMBER_DEFAULT_REGION = 'UA'
-
-# Default settings
-# BOOTSTRAP4 = {
-#     # The URL to the Popper.js JavaScript file (slim)
-#     "popper_url": {
-#         "url": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js",
-#         "integrity": "sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49",
-#         "crossorigin": "anonymous",
-#     },
-# }
 
 # Twilio
 SEND_SMS_MESSAGE = False

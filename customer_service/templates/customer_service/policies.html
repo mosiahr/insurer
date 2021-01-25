@@ -133,11 +133,7 @@
             let resultAfterTheCall = ['is_reinsured', 'is_reinsured_another_company', 'is_impossible_to_call',
                 'is_called_will_insure', 'is_called_will_not_insure'];
 
-            {#let idPolicy = td.parent('tr').attr('data-id');#}
             let numberPolicy = td.parent('tr').find('td.number').text();
-            {#let customerPolicy = td.parent('tr').find('td.customer').text();#}
-            {#let end_datePolicy = td.parent('tr').find('td.end_date').text();#}
-            {#let buttonSendSms = $(this).find('button.send_sms');#}
 
             if (resultAfterTheCall.includes(thisTdClass)) {
                 bsmodals_confirm('Policy ' + numberPolicy + ' update',

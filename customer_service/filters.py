@@ -34,7 +34,6 @@ class BaseFilter(django_filters.FilterSet):
 
     @classmethod
     def filter_for_field(cls, field, field_name, lookup_expr=None):
-        print(field, field_name, lookup_expr)
         _filter = super(BaseFilter, cls).filter_for_field(field, field_name,
                                                          lookup_expr)
         _filter.field.widget.attrs.update({'autocomplete': 'off'})

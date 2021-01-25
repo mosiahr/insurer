@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load i18n %}
+{% block title %}{% translate 'Log out' %}{% endblock %}
+
+{% block navbar %}{% endblock %}
+{% block content %}
+    <div class="col-md-3 mx-auto" style="margin-top: 100px">
+        <h1>{% translate 'Log out' %}</h1>
+        <p>{% translate 'Thanks for spending some quality time with the Web site today.' %}</p>
+        <a class="nav-item nav-link" href="{% url 'login' %}">{% translate 'Log in again' %}</a>
+    </div>
+{% endblock %}

@@ -10,26 +10,30 @@ from .models import InsurancePolicy, MessageSmsInsurancePolicyExpires
 
 class InsurancePolicyTable(tables.Table):
     number = tables.LinkColumn('customer-service:policy_detail', args=[A('pk')],
-                               attrs={'td': {'class': 'number'}})
-
+                               attrs={'td': {'class': 'number'}},
+                               verbose_name=_('Policy'))
     end_date = tables.DateColumn(attrs={'td': {'class': 'end_date'}})
     customer = tables.Column(attrs={'td': {'class': 'customer'}})
     is_reinsured = tables.Column(attrs={'td': {'class': 'is_reinsured'}})
     is_reinsured_another_company = tables.Column(
+        verbose_name=_('Another comp.'),
         attrs={'td': {'class': 'is_reinsured_another_company'}})
     is_impossible_to_call = tables.Column(
+        verbose_name=_('Impossible'),
         attrs={'td': {'class': 'is_impossible_to_call'}})
     is_called_will_insure = tables.Column(
+        verbose_name=_('Will insure'),
         attrs={'td': {'class': 'is_called_will_insure'}})
     is_called_will_not_insure = tables.Column(
+        verbose_name=_('Will not insure'),
         attrs={'td': {'class': 'is_called_will_not_insure'}})
-
     send_sms = tables.TemplateColumn(
         verbose_name=_('Send SMS'),
-        template_code=f"<button type='button' class='btn btn-outline-primary send_sms'>{_('Send SMS')}</button>",
+        template_code=f"<button type='button' class='btn btn-outline-primary btn-sm send_sms '>{_('Send SMS')}</button>",
         orderable=False)  # orderable not sortable
 
     class Meta:
+        attrs = {'class': 'table table-hover table-sm'}
         model = InsurancePolicy
         template_name = 'django_tables2/bootstrap4.html'
         fields = ('id', 'number', 'end_date', 'customer', 'car', 'price',
@@ -76,8 +80,8 @@ class MessageSmsInsurancePolicyExpiresTable(tables.Table):
     body = tables.Column(verbose_name=_('SMS text'))
 
     class Meta:
+        attrs = {'class': 'table table-hover table-sm'}
         model = MessageSmsInsurancePolicyExpires
         template_name = 'django_tables2/bootstrap4.html'
         fields = ('id', 'created', 'sid', 'insurance_policy', 'body')
         order_by = ('-id',)
-
