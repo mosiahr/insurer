@@ -219,7 +219,7 @@ class DataFile(MainAbstractModel):
 # MESSAGES
 class MessageAbstractModel(MainAbstractModel):
     sid = models.CharField(max_length=50, unique=True,
-                           default=generation_uuid('SM'))
+                           default=lambda: generation_uuid('SM'))
     body = models.TextField(verbose_name=_('Message body'))
 
     class Meta:

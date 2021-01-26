@@ -47,6 +47,8 @@ class InsurancePolicyTable(tables.Table):
                 'api-customer-service:api-insurance-policy-update',
                 kwargs={'pk': record.pk}),
         }
+        order_by = ('end_date',)
+
 
     def render_price(self, value):
         return value

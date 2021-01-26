@@ -11,5 +11,4 @@ urlpatterns = [
          InsurancePolicyDetailView.as_view(), name='policy_detail'),
     path('messages/', MessageSmsInsurancePolicyExpiresView.as_view(),
          name='messages'),
-
 ]

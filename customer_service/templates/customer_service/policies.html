@@ -8,7 +8,7 @@
     {% if filter %}
         {{ filter.form.media }}
         <h5 class="p-2 bg-light-blacker text-left">
-            <form id="policies-filter" action="" method="get" class="form form-inline">
+            <form id="policies-filter" method="get" class="form form-inline">
                 {% csrf_token %}
                 {% bootstrap_label content=_('Policies') label_class='pr-2' %}
                 {% bootstrap_form filter.form size='small' layout='inline' %}
@@ -41,6 +41,18 @@
 
     <script>
 
+        // Submit and reset use keyup event: Enter and Delete keys.
+        $('#policies-filter').find('input').on('keyup', function (event) {
+                // Cancel the default action
+                event.preventDefault();
+            if (event.keyCode === 13) {
+                $('#policies-filter').find(':submit').click()
+            } else if (event.keyCode === 46) {
+                $('#policies-filter').find(':reset').click()
+            }
+        })
+
+        // Reset (Clear inputs)
         $('#policies-filter').find(':reset').on('click', function (e) {
             e.preventDefault();
             $('#policies-filter').find(':input[type="number"]').val('');
