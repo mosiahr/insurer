@@ -4,6 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableMixin
 from django_filters.views import FilterView
 
+from insurer.settings import DEFAULT_POLICIES_PAGINATE_BY, \
+    DEFAULT_MESSAGES_PAGINATE_BY
 from .models import InsurancePolicy, MessageSmsInsurancePolicyExpires
 from .tables import InsurancePolicyTable, MessageSmsInsurancePolicyExpiresTable
 from .filters import InsurancePolicyFilter, \
@@ -22,6 +24,8 @@ class InsurancePolicyView(LoginRequiredMixin, SingleTableMixin, FilterView):
     template_name = 'customer_service/policies.html'
     context_object_name = 'policies'
     filterset_class = InsurancePolicyFilter
+    paginate_by = DEFAULT_POLICIES_PAGINATE_BY
+    ordering = ['end_date']
 
 
 class InsurancePolicyDetailView(LoginRequiredMixin, DetailView):
@@ -60,6 +64,8 @@ class MessageSmsInsurancePolicyExpiresView(LoginRequiredMixin, SingleTableMixin,
     template_name = 'customer_service/message_sms_policy_expire_list.html'
     context_object_name = 'sms_messages'
     filterset_class = MessageSmsInsurancePolicyExpiresFilter
+    paginate_by = DEFAULT_MESSAGES_PAGINATE_BY
+    ordering = ['-created']
 
 
 class MessageSmsInsurancePolicyExpiresDetailView(LoginRequiredMixin,

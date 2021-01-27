@@ -47,8 +47,7 @@ class InsurancePolicyTable(tables.Table):
                 'api-customer-service:api-insurance-policy-update',
                 kwargs={'pk': record.pk}),
         }
-        order_by = ('end_date',)
-
+        # order_by = ('end_date',)
 
     def render_price(self, value):
         return value
@@ -86,4 +85,3 @@ class MessageSmsInsurancePolicyExpiresTable(tables.Table):
         model = MessageSmsInsurancePolicyExpires
         template_name = 'django_tables2/bootstrap4.html'
         fields = ('id', 'created', 'sid', 'insurance_policy', 'body')
-        order_by = ('-id',)
