@@ -12,7 +12,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django_countries.fields import CountryField
 from django.contrib.auth import get_user_model
 
-from customer_service.utils import generation_uuid
+from customer_service.utils import generation_uuid, get_uuid_for_sms
 from insurer.settings import DEFAULT_COUNTRY_UA, MEDIA_ROOT, \
     DATE_INPUT_FORMAT_UA
 from insurer.conf import FROM_, TO
@@ -64,8 +64,7 @@ class Car(MainAbstractModel):
     model = models.CharField(max_length=50, verbose_name=_('Model'))
     registration_place = models.CharField(
         max_length=50, verbose_name=_('Registration Place'))
-    registration_country = CountryField(
-        default=DEFAULT_COUNTRY_UA)
+    registration_country = models.CharField(max_length=50)
     registration_number = models.CharField(
         max_length=50, verbose_name=_('Registration Number'))
     vin_code = models.CharField(max_length=17, verbose_name=_('VIN code'))
@@ -219,7 +218,7 @@ class DataFile(MainAbstractModel):
 # MESSAGES
 class MessageAbstractModel(MainAbstractModel):
     sid = models.CharField(max_length=50, unique=True,
-                           default=lambda: generation_uuid('SM'))
+                           default=get_uuid_for_sms)
     body = models.TextField(verbose_name=_('Message body'))
 
     class Meta:

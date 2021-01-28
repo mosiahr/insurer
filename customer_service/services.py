@@ -1,5 +1,9 @@
+import logging
+
 from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
+
+logger = logging.getLogger(__name__)
 
 
 class CreateMessage:
@@ -14,4 +18,4 @@ class CreateMessage:
                 body=body_message)
             return message.sid
         except TwilioRestException as e:
-            print(e)
+            logger.error(e)

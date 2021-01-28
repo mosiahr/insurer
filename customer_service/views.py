@@ -46,10 +46,9 @@ class InsurancePolicyDetailView(LoginRequiredMixin, DetailView):
         context = super(InsurancePolicyDetailView, self).get_context_data()
         insurance_policy = self.get_object()
         if insurance_policy:
-            context.update(
-                {
-                    'sms_messages': MessageSmsInsurancePolicyExpires.objects.filter(
-                        insurance_policy=insurance_policy.id)})
+            context.update({
+                'sms_messages': MessageSmsInsurancePolicyExpires.objects.filter(
+                    insurance_policy=insurance_policy.id)})
         return context
 
 

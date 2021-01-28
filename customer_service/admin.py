@@ -7,8 +7,28 @@ from .models import InsurancePolicy, Car, DataFile, Customer, \
     MessageSmsInsurancePolicyExpires
 
 
+class DisableAddChangeDeleteAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request, obj=None):
+        """
+        Override method to disable add the object.
+        """
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        """
+        Override method to disable change the object.
+        """
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        """
+        Override method to disable delete the object.
+        """
+        return False
+
+
 @admin.register(InsurancePolicy)
-class InsurancePolicyAdmin(admin.ModelAdmin):
+class InsurancePolicyAdmin(DisableAddChangeDeleteAdmin):
     list_display = ['number', 'registration_date', 'begin_date', 'end_date',
                     'get_insurance_code', 'get_customer',
                     'get_car', 'sum_insured',
@@ -20,11 +40,6 @@ class InsurancePolicyAdmin(admin.ModelAdmin):
               'price', 'territory']
 
     # readonly_fields = ['user']
-    def get_readonly_fields(self, request, obj=None):
-        """
-        Hook for specifying custom readonly fields.
-        """
-        return [field.name for field in self.model._meta.fields]
 
     def get_insurance_code(self, obj):
         return obj.insurance_code
@@ -113,15 +128,14 @@ class CustomerAdmin(admin.ModelAdmin):
     get_ind_number.short_description = _('IIN')
 
 
+
+
+
 @admin.register(MessageSmsInsurancePolicyExpires)
-class MessageSmsInsurancePolicyExpiresAdmin(admin.ModelAdmin):
+class MessageSmsInsurancePolicyExpiresAdmin(DisableAddChangeDeleteAdmin):
     list_display = ('sid', 'body', 'from_phone_number', 'to_phone_number',
                     'insurance_policy', 'created')
     readonly_fields = ['created']
     list_display_links = ['sid']
 
-    def get_readonly_fields(self, request, obj=None):
-        """
-        Hook for specifying custom readonly fields.
-        """
-        return [field.name for field in self.model._meta.fields]
+

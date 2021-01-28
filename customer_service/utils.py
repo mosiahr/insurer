@@ -9,3 +9,7 @@ def generation_uuid(prefix):
     """
     id = uuid.uuid4()
     return f"{prefix}{id.hex}"
+
+
+def get_uuid_for_sms():
+    return generation_uuid(prefix='SM')
