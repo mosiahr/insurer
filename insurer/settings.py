@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'phonenumber_field',
-    'django_countries',
     'django_tables2',
     'django_filters',
 

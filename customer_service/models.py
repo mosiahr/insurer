@@ -9,7 +9,6 @@ from django.utils import timezone as django_timezone
 from django.core.exceptions import ObjectDoesNotExist
 
 from phonenumber_field.modelfields import PhoneNumberField
-from django_countries.fields import CountryField
 from django.contrib.auth import get_user_model
 
 from customer_service.utils import generation_uuid, get_uuid_for_sms

@@ -4,7 +4,6 @@ import customer_service.models
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
-import django_countries.fields
 import phonenumber_field.modelfields
 
 
@@ -26,7 +25,7 @@ class Migration(migrations.Migration):
                 ('mark', models.CharField(max_length=50, verbose_name='Mark')),
                 ('model', models.CharField(max_length=50, verbose_name='Model')),
                 ('registration_place', models.CharField(max_length=50, verbose_name='Registration Place')),
-                ('registration_country', django_countries.fields.CountryField(default='UA', max_length=2)),
+                ('registration_country', models.CharField(max_length=50)),
                 ('registration_number', models.CharField(max_length=50, verbose_name='Registration Number')),
                 ('vin_code', models.CharField(max_length=17, verbose_name='VIN code')),
                 ('user', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
