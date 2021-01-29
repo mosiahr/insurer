@@ -33,7 +33,7 @@ class InsurancePolicyTable(tables.Table):
         orderable=False)  # orderable not sortable
 
     class Meta:
-        attrs = {'class': 'table table-hover table-sm'}
+        attrs = {'class': 'table table-hover table-sm', 'id': 'table-policies'}
         model = InsurancePolicy
         template_name = 'django_tables2/bootstrap4.html'
         fields = ('id', 'number', 'end_date', 'customer', 'car', 'price',
@@ -47,6 +47,7 @@ class InsurancePolicyTable(tables.Table):
                 'api-customer-service:api-insurance-policy-update',
                 kwargs={'pk': record.pk}),
         }
+
         # order_by = ('end_date',)
 
     def render_price(self, value):
@@ -55,10 +56,11 @@ class InsurancePolicyTable(tables.Table):
     def render_territory(self, value):
         return str(value)[:15]
 
-    def result_after_the_call(self, value, yes='✔', no='❌'):
+    def result_after_the_call(self, value, yes='&#9899;', no='&#10060;'):
         """ Result after the call to the customer """
         return format_html('<a href="#"><span class={}>{}</span></a>',
-                           str(value).casefold(), yes if value else no)
+                           str(value).casefold(),
+                           format_html(yes) if value else format_html(no))
 
     def render_is_reinsured(self, value):
         return self.result_after_the_call(value)
@@ -81,7 +83,7 @@ class MessageSmsInsurancePolicyExpiresTable(tables.Table):
     body = tables.Column(verbose_name=_('SMS text'))
 
     class Meta:
-        attrs = {'class': 'table table-hover table-sm'}
+        attrs = {'class': 'table table-hover table-sm', 'id': 'table-messages'}
         model = MessageSmsInsurancePolicyExpires
         template_name = 'django_tables2/bootstrap4.html'
         fields = ('id', 'created', 'sid', 'insurance_policy', 'body')

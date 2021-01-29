@@ -1,3 +1,14 @@
+body {
+    font-family: -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI", Roboto,
+    "Helvetica Neue", Arial,
+    "Noto Sans", sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+    /*"Noto Color Emoji;*/
+}
+
 td > a:hover {
     text-decoration: none;
 }
@@ -43,3 +54,18 @@ td > a:hover {
     padding: 20px;
 }
 
+.true {
+    color: green;
+    font-size: large;
+    padding: 2px 15px;
+}
+
+.false {
+    color: red;
+    font-size: large;
+    padding: 2px 15px;
+}
+
+.form-field-size {
+    max-width: 140px;
+}

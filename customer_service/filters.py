@@ -13,7 +13,8 @@ class BaseFilter(django_filters.FilterSet):
         label=_('Number insurance policy'),
         method='filter_insurance_policy',
         widget=TextInput(
-            attrs={'placeholder': 'AM-0000000', 'autocomplete': 'off'})
+            attrs={'placeholder': 'AM-0000000', 'autocomplete': 'off',
+                   'class': 'form-field-size'})
     )
 
     date_after = django_filters.DateFilter(
@@ -21,7 +22,8 @@ class BaseFilter(django_filters.FilterSet):
         method='filter_date_after',
         widget=DatePickerInput(
             format=DATE_INPUT_FORMAT_UA,
-            attrs={'placeholder': _('Date from'), 'autocomplete': 'off'}),
+            attrs={'placeholder': _('Date from'), 'autocomplete': 'off',
+                   'class': 'form-field-size'}),
     )
 
     date_before = django_filters.DateFilter(
@@ -29,14 +31,17 @@ class BaseFilter(django_filters.FilterSet):
         method='filter_date_before',
         widget=DatePickerInput(
             format=DATE_INPUT_FORMAT_UA,
-            attrs={'placeholder': _('Date to'), 'autocomplete': 'off'})
+            attrs={'placeholder': _('Date to'), 'autocomplete': 'off',
+                   'class': 'form-field-size'})
     )
 
     @classmethod
     def filter_for_field(cls, field, field_name, lookup_expr=None):
         _filter = super(BaseFilter, cls).filter_for_field(field, field_name,
-                                                         lookup_expr)
-        _filter.field.widget.attrs.update({'autocomplete': 'off'})
+                                                          lookup_expr)
+        if _filter.field_name not in ['sid', 'customer']:
+            _filter.field.widget.attrs.update({'autocomplete': 'off',
+                                               'class': 'form-field-size'})
         return _filter
 
 
@@ -49,7 +54,8 @@ class InsurancePolicyFilter(BaseFilter):
     car = django_filters.CharFilter(
         method='filter_car',
         widget=TextInput(attrs={'placeholder': _('Number of the car'),
-                                'autocomplete': 'off'}))
+                                'autocomplete': 'off',
+                                'class': 'form-field-size'}))
 
     class Meta:
         model = InsurancePolicy

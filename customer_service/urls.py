@@ -1,8 +1,7 @@
-from django.urls import path, include
+from django.urls import path
 
 from .views import (InsurancePolicyView, InsurancePolicyDetailView,
-                    MessageSmsInsurancePolicyExpiresView,
-                    MessageSmsInsurancePolicyExpiresDetailView)
+                    MessageSmsInsurancePolicyExpiresView)
 
 app_name = 'customer_service'
 urlpatterns = [

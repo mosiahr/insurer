@@ -67,21 +67,17 @@
 
 {% block javascript %}{% endblock %}
 <script>
+    $(window).on("load", function () {
+        $('#loading').fadeOut('slow');
+    })
     $(document).ready(function () {
-
-        $(window).on('load', function () {
-            $('#loading').fadeOut('slow');
-        })
-
         var docHeight = $(window).height();
         var footerHeight = $('#footer').height();
         var footerTop = $('#footer').position().top + footerHeight;
 
         if (footerTop < docHeight)
             $('#footer').css('margin-top', 10 + (docHeight - footerTop) + 'px');
-
     });
-
 </script>
 
 </body>

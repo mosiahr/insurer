@@ -7,17 +7,13 @@
 {% block content %}
     <div class="col-md-3 mx-auto" style="margin-top: 100px">
         <h1>{% translate 'Log in' %}</h1>
-        {% if user.is_authenticated %}
-            <p>{% translate 'You are already signed in' %}</p>
-        {% else %}
-            <form method="post" class="form form-horizontal">
-                {% csrf_token %}
-                {% bootstrap_form form size='small' %}
-                <div class="form-group">
-                    <input type="hidden" name="next" value="{{ next }}">
-                    {% bootstrap_button content=_('Log in') button_type='submit' size='small' button_class='btn-secondary' %}
-                </div>
-            </form>
-        {% endif %}
+        <form method="post" class="form form-horizontal">
+            {% csrf_token %}
+            {% bootstrap_form form size='small' %}
+            <div class="form-group">
+                <input type="hidden" name="next" value="{{ next }}">
+                {% bootstrap_button content=_('Log in') button_type='submit' size='small' button_class='btn-secondary' %}
+            </div>
+        </form>
     </div>
 {% endblock %}

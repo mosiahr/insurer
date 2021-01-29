@@ -14,7 +14,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.contrib.auth.views import LoginView
 from django.contrib.staticfiles.views import serve
 from django.urls import path, include
 
@@ -29,7 +28,6 @@ urlpatterns = [
     path('api/v1/customer-service/',
          include('customer_service.api.urls',
                  namespace='api-customer-service')),
-    # path('accounts/login/', LoginView.as_view(), name='login')
     path('accounts/', include('django.contrib.auth.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

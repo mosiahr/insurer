@@ -28,10 +28,23 @@
 
 {% block javascript %}
     <script>
-        $('#sms-message-filter').find(':reset').on('click', function (e) {
-            e.preventDefault();
-            $('#sms-message-filter').find(':input[type="number"]').val('');
-            $('#sms-message-filter').find(':input[type="text"]').val('');
-        })
+        $(document).ready(function () {
+            // Adding HTML special characters
+            $('#table-messages').find('th').each(function () {
+                if ($(this).attr('class').includes('asc')) {
+                    $(this).find('a').append('<span> &#11015;</span>');
+                } else if ($(this).attr('class').includes('desc')) {
+                    $(this).find('a').append($("<span> &#11014;</span>"));
+                }
+            });
+
+            // Reset (Clear inputs)
+            $('#sms-message-filter').find(':reset').on('click', function (e) {
+                e.preventDefault();
+                $('#sms-message-filter').find(':input[type="number"]').val('');
+                $('#sms-message-filter').find(':input[type="text"]').val('');
+            })
+        });
+
     </script>
 {% endblock %}
