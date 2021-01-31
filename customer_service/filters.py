@@ -53,7 +53,7 @@ class InsurancePolicyFilter(BaseFilter):
 
     car = django_filters.CharFilter(
         method='filter_car',
-        widget=TextInput(attrs={'placeholder': _('Number of the car'),
+        widget=TextInput(attrs={'placeholder': _('Car number'),
                                 'autocomplete': 'off',
                                 'class': 'form-field-size'}))
 

@@ -31,9 +31,9 @@
         $(document).ready(function () {
             // Adding HTML special characters
             $('#table-messages').find('th').each(function () {
-                if ($(this).attr('class').includes('asc')) {
+                if ($(this).attr('class') && $(this).attr('class').includes('asc')) {
                     $(this).find('a').append('<span> &#11015;</span>');
-                } else if ($(this).attr('class').includes('desc')) {
+                } else if ($(this).attr('class') && $(this).attr('class').includes('desc')) {
                     $(this).find('a').append($("<span> &#11014;</span>"));
                 }
             });

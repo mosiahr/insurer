@@ -12,10 +12,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'icon/favicon_io/favicon-16x16.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'icon/favicon_io/favicon-32x32.png' %}">
+    <link rel="manifest" href="{% static 'icon/favicon_io/site.webmanifest' %}">
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
-    <title>{% block title %}{% endblock %} | INSURER</title>
+    <title>{% block title %}{% endblock %} | Insurer</title>
 </head>
 <body>
 <div id="loading" class="text-center">
@@ -25,25 +28,27 @@
 </div>
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Insurer</a>
+        <a class="navbar-brand" href="#"><img src="{% static 'icon/favicon_io/favicon-32x32.png' %}" alt="" height=""> <strong> surer</strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link {% active request policies %}" href="{{ policies }}">Policies</a>
-                <a class="nav-item nav-link {% active request messages %}" href="{{ messages }}">Messages</a>
-
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% active request policies %}">
+                    <a class="nav-link" href="{{ policies }}">{% translate 'Policies' %}</a></li>
+                <li class="nav-item {% active request messages %}">
+                    <a class="nav-link" href="{{ messages }}">{% translate 'Messages' %}</a></li>
+            </ul>
+            <ul class="navbar-nav">
                 {% if user.is_authenticated %}
-                    <a class="nav-item nav-link float-right {% active request logout %}"
-                       href="{{ logout }}">{% translate 'Log out' %}</a>
+                    <li class="nav-item {% active request logout %}">
+                        <a class="nav-link" href="{{ logout }}">{% translate 'Log out' %}</a></li>
                 {% else %}
-                    <a class="nav-item nav-link float-right {% active request login %}"
-                       href="{{ login }}">{% translate 'Log in' %}</a>
+                    <li class="nav-item {% active request login %}"><a class=" nav-link" href="{{ login }}">
+                        {% translate 'Log in' %}</a></li>
                 {% endif %}
-
-            </div>
+            </ul>
         </div>
     </nav>
 {% endblock %}
@@ -57,7 +62,6 @@
 <!-- Footer -->
 <footer id="footer" class="page-footer bg-light-blacker">
     <!-- Copyright -->
-    {#        <span class="content-center py-3">© 2020 Copyright: <a href="https://github.com/mosiahr">Hryhorii Mosia</a></span>#}
     <div class="footer-copyright text-center py-3">© 2020 Copyright: <a href="https://github.com/mosiahr">Hryhorii
         Mosia</a></div>
     <!-- Copyright -->

@@ -16,16 +16,16 @@ class InsurancePolicyTable(tables.Table):
     customer = tables.Column(attrs={'td': {'class': 'customer'}})
     is_reinsured = tables.Column(attrs={'td': {'class': 'is_reinsured'}})
     is_reinsured_another_company = tables.Column(
-        verbose_name=_('Another comp.'),
+        verbose_name=_('Another'),
         attrs={'td': {'class': 'is_reinsured_another_company'}})
     is_impossible_to_call = tables.Column(
         verbose_name=_('Impossible'),
         attrs={'td': {'class': 'is_impossible_to_call'}})
     is_called_will_insure = tables.Column(
-        verbose_name=_('Will insure'),
+        verbose_name=_('Will be'),
         attrs={'td': {'class': 'is_called_will_insure'}})
     is_called_will_not_insure = tables.Column(
-        verbose_name=_('Will not insure'),
+        verbose_name=_("Won't"),
         attrs={'td': {'class': 'is_called_will_not_insure'}})
     send_sms = tables.TemplateColumn(
         verbose_name=_('Send SMS'),
@@ -80,6 +80,7 @@ class InsurancePolicyTable(tables.Table):
 
 class MessageSmsInsurancePolicyExpiresTable(tables.Table):
     created = tables.DateColumn(verbose_name=_('Sent'))
+    insurance_policy = tables.Column(verbose_name=_('Policy'))
     body = tables.Column(verbose_name=_('SMS text'))
 
     class Meta:

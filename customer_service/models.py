@@ -88,9 +88,9 @@ class IntegerRangeField(models.PositiveSmallIntegerField):
 class InsurancePolicy(MainAbstractModel):
     number = models.CharField(max_length=20, verbose_name=_('Policy number'))
     sticker = models.CharField(max_length=20, blank=True, null=True)
-    registration_date = models.DateField()
-    begin_date = models.DateField()
-    end_date = models.DateField()
+    registration_date = models.DateField(verbose_name=_('Registration date'))
+    begin_date = models.DateField(verbose_name=_('Begin date'))
+    end_date = models.DateField(verbose_name=_('End date'))
 
     insurance_code = IntegerRangeField(min_value=100, max_value=500)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT,
@@ -99,16 +99,17 @@ class InsurancePolicy(MainAbstractModel):
                             verbose_name=_('Car'))
 
     sum_insured = models.DecimalField(max_digits=8, decimal_places=2)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    price = models.DecimalField(max_digits=6, decimal_places=2,
+                                verbose_name=_('Price'))
 
     bonus = models.CharField(max_length=1, blank=True, null=True)
 
     territory = models.TextField()
 
     is_reinsured = models.BooleanField(
-        default=False, verbose_name=_('Reinsured'))
+        default=False, verbose_name=_('Insured'))
     is_reinsured_another_company = models.BooleanField(
-        default=False, verbose_name=_('Reinsured in another company'))
+        default=False, verbose_name=_('Insured in another company'))
     is_impossible_to_call = models.BooleanField(
         default=False, verbose_name=_('Impossible to call'))
     is_called_will_insure = models.BooleanField(
