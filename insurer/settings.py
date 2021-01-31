@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 from pathlib import Path
+
+from django.utils.translation import gettext_lazy as _
+
 from .conf import SECRET_KEY
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -77,6 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'django.template.context_processors.i18n',
             ],
         },
     },
@@ -117,6 +121,16 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # LANGUAGE_CODE = 'en-us'
 LANGUAGE_CODE = 'uk'
+
+LANGUAGES = [
+    ('uk', _('Ukrainian')),
+    ('en', _('English')),
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, 'customer_service/locale'),
+]
 
 # TIME_ZONE = 'UTC'
 TIME_ZONE = 'Europe/Kiev'
@@ -232,7 +246,4 @@ LOGGING = {
     },
 }
 
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, '/locale'),
-    os.path.join(BASE_DIR, '/customer_service'),
-)
+

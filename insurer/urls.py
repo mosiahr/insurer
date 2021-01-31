@@ -22,15 +22,15 @@ from django.conf import settings
 from django.views.decorators.cache import never_cache
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('customer-service/',
-         include('customer_service.urls', namespace='customer-service')),
-    path('api/v1/customer-service/',
-         include('customer_service.api.urls',
-                 namespace='api-customer-service')),
-    path('accounts/', include('django.contrib.auth.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  path('admin/', admin.site.urls),
+                  path('customer-service/',
+                       include('customer_service.urls',
+                               namespace='customer-service')),
+                  path('api/v1/customer-service/',
+                       include('customer_service.api.urls',
+                               namespace='api-customer-service')),
+                  path('accounts/', include('django.contrib.auth.urls')),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns.append(path('static/<path:path>', never_cache(serve)))
-

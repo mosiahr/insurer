@@ -38,9 +38,10 @@
     <script src="/static/bsmodals/bsmodals.js"></script>
     {#    <script src="/static/bsmodals/restapi.js"></script>#}
 
+{#    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>#}
+
     <script>
         $(document).ready(function () {
-
             // Adding HTML special characters
             $('#table-policies').find('th').each(function () {
                 if ($(this).attr('class') && $(this).attr('class').includes('asc')) {
@@ -158,8 +159,8 @@
             let numberPolicy = td.parent('tr').find('td.number').text();
 
             if (resultAfterTheCall.includes(thisTdClass)) {
-                bsmodals_confirm('Policy ' + numberPolicy + ' update',
-                    'Are you sure you want to update the policy ?', function (result) {
+                bsmodals_confirm("{% translate 'Policy' %}" + ' ' + numberPolicy + ' ' + "{% translate 'update' %}",
+                    "{% translate 'Are you sure you want to update the policy?' %}", function (result) {
                         if (result) {
                             let dataUrlPolicy = td.parent('tr').attr('data-url');
                             let data = getDataAjax(dataUrlPolicy);
@@ -204,7 +205,7 @@
             if (!message) {
                 messageSendSms = "".concat(customerPolicy, ', ', 'insurance policy', ' ', numberPolicy, ' ', 'expires on', ' ', end_datePolicy)
             }
-            let msgModals = 'Are you sure you want to send the sms?'
+            let msgModals = "{% translate 'Are you sure you want to send the SMS messages?' %}";
 
             $('#update-sms-dialog-close').click(function () {
                 buttonSendSms.trigger("click");
@@ -215,7 +216,7 @@
                 buttonSendSms.trigger('click', msgAfterUpdate);
             });
 
-            bsmodals_custom_confirm('Send message SMS', messageSendSms, msgModals, function (result) {
+            bsmodals_custom_confirm("{% translate 'Send message SMS messages' %}", messageSendSms, msgModals, function (result) {
                     if (result) {
                         $.ajax({
                             method: 'POST',
@@ -229,8 +230,9 @@
                             },
                         })
                             .done(function (data, status, jqXHR) {
-                                    console.log('jqXHR: ', jqXHR.status);
-                                    bsmodals_alert('Success!', 'The message was sent successfuly')
+                                    {#console.log('jqXHR: ', jqXHR.status);#}
+                                    bsmodals_alert("{% translate 'Success' %}" + '!',
+                                        "{% translate 'The message was sent successfuly' %}" + '!')
                                 }
                             )
                             .fail(function (data) {
