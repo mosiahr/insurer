@@ -1,9 +1,10 @@
 {% extends "bsmodals/generic.html" %}
+{% load i18n %}
 
 {% block body %}
     <h5 id="custom-confirm-dialog-title"></h5>
 
-    <label for="custom-confirm-dialog-msg-body" class="col-form-label">Message</label>
+    <label for="custom-confirm-dialog-msg-body" class="col-form-label">{% translate 'Message' %}</label>
     <textarea readonly id="custom-confirm-dialog-msg-body" class="form-control"
               name="custom-confirm-dialog-msg-body" rows="5"></textarea>
 

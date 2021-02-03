@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-31 22:40+0200\n"
+"POT-Creation-Date: 2021-02-02 22:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,6 +29,7 @@ msgstr "Код"
 #: customer_service/models.py:97
 #: customer_service/templates/customer_service/policy_detail.html:50
 #: customer_service/templates/customer_service/policy_detail.html:51
+#: customer_service/templates/customer_service/update_sms_dialog.html:9
 msgid "Customer"
 msgstr "Клієнт"
 
@@ -152,6 +153,7 @@ msgid "Was called and will not insure"
 msgstr "Додзвонились і не буде страхувати"
 
 #: customer_service/models.py:121 customer_service/models.py:245
+#: customer_service/templates/customer_service/update_sms_dialog.html:12
 msgid "Insurance Policy"
 msgstr "Страховий поліс"
 
@@ -171,16 +173,12 @@ msgstr "Файли з даними"
 msgid "Message body"
 msgstr "Тіло повідомлення"
 
-#: customer_service/models.py:238
-msgid "Message SMS"
-msgstr "SMS повідомлення"
-
-#: customer_service/models.py:239
-msgid "Messages SMS"
+#: customer_service/models.py:238 customer_service/models.py:239
+#: customer_service/templates/customer_service/message_sms_policy_expire_list.html:13
+msgid "SMS messages"
 msgstr "SMS повідомлення"
 
 #: customer_service/tables.py:14 customer_service/tables.py:83
-#: customer_service/templates/customer_service/policies.html:162
 #: customer_service/templates/customer_service/policy_detail.html:28
 msgid "Policy"
 msgstr "Поліс"
@@ -213,42 +211,19 @@ msgstr "Відправлено"
 msgid "SMS text"
 msgstr "Текст SMS"
 
+#: customer_service/templates/customer_service/custom_confirm_dialog.html:7
+#: customer_service/templates/customer_service/update_sms_dialog.html:15
+msgid "Message"
+msgstr "Повідомлення"
+
 #: customer_service/templates/customer_service/message_sms_policy_expire_list.html:6
 msgid "Messages"
 msgstr "Повідомлення"
-
-#: customer_service/templates/customer_service/message_sms_policy_expire_list.html:13
-msgid "SMS messages"
-msgstr "SMS повідомлення"
 
 #: customer_service/templates/customer_service/policies.html:5
 #: customer_service/templates/customer_service/policies.html:12
 msgid "Policies"
 msgstr "Поліси"
-
-#: customer_service/templates/customer_service/policies.html:162
-msgid "update"
-msgstr "корегування"
-
-#: customer_service/templates/customer_service/policies.html:163
-msgid "Are you sure you want to update the policy?"
-msgstr "Ви впевнені, що хочете корегувати поліс?"
-
-#: customer_service/templates/customer_service/policies.html:208
-msgid "Are you sure you want to send the SMS messages?"
-msgstr "Ви впевнені, що хочете надіслати SMS повідомлення?"
-
-#: customer_service/templates/customer_service/policies.html:219
-msgid "Send message SMS messages"
-msgstr "Відправити SMS повідомлення"
-
-#: customer_service/templates/customer_service/policies.html:234
-msgid "Success"
-msgstr "Успіх"
-
-#: customer_service/templates/customer_service/policies.html:235
-msgid "The message was sent successfuly"
-msgstr "Повідомлення успішно надіслано"
 
 #: customer_service/templates/customer_service/policy_detail.html:30
 msgid "Sticker"
@@ -317,3 +292,15 @@ msgstr "SMS повідомлення"
 #: customer_service/templates/customer_service/policy_detail.html:82
 msgid "No SMS messages yet"
 msgstr "Поки що немає SMS-повідомлень"
+
+#: customer_service/templates/customer_service/update_sms_dialog.html:5
+msgid "Update SMS message"
+msgstr "Корегування SMS повідомлення"
+
+#: customer_service/templates/customer_service/update_sms_dialog.html:22
+msgid "CLOSE"
+msgstr "Закрити"
+
+#: customer_service/templates/customer_service/update_sms_dialog.html:23
+msgid "OK"
+msgstr ""

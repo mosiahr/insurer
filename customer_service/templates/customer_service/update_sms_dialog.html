@@ -1,27 +1,24 @@
 {% extends "bsmodals/generic.html" %}
-
-{#{% block title %}#}
-{#    <h5 id="mydialog-title">Title</h5>#}
-{#{% endblock title %}#}
+{% load i18n %}
 
 {% block body %}
-    <h5 id="update-sms-dialog-title">Update message SMS</h5>
+    <h5 id="update-sms-dialog-title">{% translate 'Update SMS message' %}</h5>
 
     <form>
         <div class="form-group">
-            <label for="customer" class="col-form-label">Customer</label>
+            <label for="customer" class="col-form-label">{% translate 'Customer' %}</label>
             <input type="text" class="form-control" id="customer" name="customer">
 
-            <label for="number_policy" class="col-form-label">Insurance Policy</label>
+            <label for="number_policy" class="col-form-label">{% translate 'Insurance Policy' %}</label>
             <input type="text" class="form-control" id="number_policy" name="number_policy">
 
-            <label for="message_sms" class="col-form-label">Message</label>
+            <label for="message_sms" class="col-form-label">{% translate 'Message' %}</label>
             <textarea id="message_sms" class="form-control" name="message_sms" rows="5"></textarea>
         </div>
     </form>
 {% endblock body %}
 
 {% block footer %}
-    <button id="update-sms-dialog-close" type="button" data-dismiss="modal" class="btn btn-secondary">CLOSE</button>
-    <button id="update-sms-dialog-ok" type="button" data-dismiss="modal" class="submit-btn btn btn-success">OK</button>
+    <button id="update-sms-dialog-close" type="button" data-dismiss="modal" class="btn btn-secondary">{% translate 'CLOSE' %}</button>
+    <button id="update-sms-dialog-ok" type="button" data-dismiss="modal" class="submit-btn btn btn-success">{% translate 'OK' %}</button>
 {% endblock footer %}

@@ -27,10 +27,18 @@ class InsurancePolicyTable(tables.Table):
     is_called_will_not_insure = tables.Column(
         verbose_name=_("Won't"),
         attrs={'td': {'class': 'is_called_will_not_insure'}})
-    send_sms = tables.TemplateColumn(
-        verbose_name=_('Send SMS'),
-        template_code=f"<button type='button' class='btn btn-outline-primary btn-sm send_sms '>{_('Send SMS')}</button>",
-        orderable=False)  # orderable not sortable
+    sms = tables.Column(
+        accessor='count_sms',
+        verbose_name=_('SMS'),
+        orderable=False  # orderable not sortable
+    )
+
+    def render_sms(self, value):
+        html = \
+            """<button type='button' class='btn btn-outline-secondary btn-sm send_sms'>
+                   <text>SMS&nbsp;</text><span class='badge badge-{1}'>{0}</span>
+            </button>"""
+        return format_html(html, value, 'success' if value > 0 else 'light')
 
     class Meta:
         attrs = {'class': 'table table-hover table-sm', 'id': 'table-policies'}

@@ -124,6 +124,13 @@ class InsurancePolicy(MainAbstractModel):
     def __str__(self):
         return self.number
 
+    def count_sms(self) -> int:
+        """ Return a quantity of SMS that sent to customer
+         about the insurance policy """
+        sms_list = MessageSmsInsurancePolicyExpires.objects.filter(
+            insurance_policy=self.id)
+        return len(sms_list)
+
 
 class DataFile(MainAbstractModel):
     date_format = DATE_INPUT_FORMAT_UA
@@ -235,8 +242,8 @@ class MessageSmsAbstractModel(MessageAbstractModel):
 
     class Meta:
         abstract = True
-        verbose_name = _('Message SMS')
-        verbose_name_plural = _('Messages SMS')
+        verbose_name = _('SMS messages')
+        verbose_name_plural = _('SMS messages')
 
 
 class MessageSmsInsurancePolicyExpires(MessageSmsAbstractModel):
