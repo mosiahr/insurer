@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-02 22:11+0200\n"
+"POT-Creation-Date: 2021-02-05 09:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,7 +43,7 @@ msgstr "Автомобіль"
 msgid "Territory"
 msgstr "Територія"
 
-#: customer_service/admin.py:84
+#: customer_service/admin.py:84 customer_service/tables.py:32
 msgid "SMS"
 msgstr ""
 
@@ -152,7 +152,7 @@ msgstr "Додзвонились і буде страхувати"
 msgid "Was called and will not insure"
 msgstr "Додзвонились і не буде страхувати"
 
-#: customer_service/models.py:121 customer_service/models.py:245
+#: customer_service/models.py:121 customer_service/models.py:252
 #: customer_service/templates/customer_service/update_sms_dialog.html:12
 msgid "Insurance Policy"
 msgstr "Страховий поліс"
@@ -161,24 +161,24 @@ msgstr "Страховий поліс"
 msgid "Insurance Polices"
 msgstr "Страхові поліси"
 
-#: customer_service/models.py:133
+#: customer_service/models.py:140
 msgid "Data File"
 msgstr "Файл з даними"
 
-#: customer_service/models.py:134
+#: customer_service/models.py:141
 msgid "Data Files"
 msgstr "Файли з даними"
 
-#: customer_service/models.py:222
+#: customer_service/models.py:229
 msgid "Message body"
 msgstr "Тіло повідомлення"
 
-#: customer_service/models.py:238 customer_service/models.py:239
+#: customer_service/models.py:245 customer_service/models.py:246
 #: customer_service/templates/customer_service/message_sms_policy_expire_list.html:13
 msgid "SMS messages"
 msgstr "SMS повідомлення"
 
-#: customer_service/tables.py:14 customer_service/tables.py:83
+#: customer_service/tables.py:14 customer_service/tables.py:91
 #: customer_service/templates/customer_service/policy_detail.html:28
 msgid "Policy"
 msgstr "Поліс"
@@ -199,15 +199,11 @@ msgstr "Буде"
 msgid "Won't"
 msgstr "Не буде"
 
-#: customer_service/tables.py:31
-msgid "Send SMS"
-msgstr "Відпр. SMS"
-
-#: customer_service/tables.py:82
+#: customer_service/tables.py:90
 msgid "Sent"
 msgstr "Відправлено"
 
-#: customer_service/tables.py:84
+#: customer_service/tables.py:92
 msgid "SMS text"
 msgstr "Текст SMS"
 
@@ -220,8 +216,8 @@ msgstr "Повідомлення"
 msgid "Messages"
 msgstr "Повідомлення"
 
-#: customer_service/templates/customer_service/policies.html:5
-#: customer_service/templates/customer_service/policies.html:12
+#: customer_service/templates/customer_service/policies.html:6
+#: customer_service/templates/customer_service/policies.html:20
 msgid "Policies"
 msgstr "Поліси"
 
@@ -299,7 +295,7 @@ msgstr "Корегування SMS повідомлення"
 
 #: customer_service/templates/customer_service/update_sms_dialog.html:22
 msgid "CLOSE"
-msgstr "Закрити"
+msgstr "ЗАКРИТИ"
 
 #: customer_service/templates/customer_service/update_sms_dialog.html:23
 msgid "OK"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-02 17:01+0200\n"
+"POT-Creation-Date: 2021-02-07 03:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,15 +21,15 @@ msgstr ""
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: static/js/policies.js:69
+#: static/js/policies.js:68
 msgid "Yes"
 msgstr "Так"
 
-#: static/js/policies.js:70
+#: static/js/policies.js:69
 msgid "No"
 msgstr "НІ"
 
-#: static/js/policies.js:71
+#: static/js/policies.js:70
 msgid "Update"
 msgstr "Корегувати"
 
@@ -45,38 +45,50 @@ msgstr "корегування"
 msgid "Are you sure you want to update the policy?"
 msgstr "Ви впевнені, що хочете корегувати поліс?"
 
-#: static/js/policies.js:150
+#: static/js/policies.js:148
+#, javascript-format
+msgid "The policy %s was update successfuly!"
+msgstr "Поліс %s успішно відкореговано!"
+
+#: static/js/policies.js:156
 msgid "YES"
 msgstr "ТАК"
 
-#: static/js/policies.js:150
+#: static/js/policies.js:156
 msgid "NO"
 msgstr "НІ"
 
-#: static/js/policies.js:166
+#: static/js/policies.js:172
+msgid "%(customer)s, insurance policy %(number)s expires on %(end_date)s"
+msgstr "%(customer)s, страховий поліс %(number)s закінчується %(end_date)s"
+
+#: static/js/policies.js:176
 msgid "Are you sure you want to send the SMS messages?"
 msgstr "Ви впевнені, що хочете надіслати SMS повідомлення?"
 
-#: static/js/policies.js:177
-msgid "Send message SMS messages"
+#: static/js/policies.js:187
+msgid "Send SMS message"
 msgstr "Відправити SMS повідомлення"
 
-#: static/js/policies.js:192
-msgid "Success"
-msgstr "Успіх"
-
-#: static/js/policies.js:193
+#: static/js/policies.js:202
 msgid "The message was sent successfuly"
 msgstr "Повідомлення успішно надіслано"
 
-#: static/js/policies.js:210
+#: static/js/policies.js:214
+msgid "The message wasn't sent"
+msgstr "Повідомлення не надіслано"
+
+#: static/js/policies.js:228
 msgid "OK"
 msgstr ""
 
-#: static/js/policies.js:210
+#: static/js/policies.js:228
 msgid "CLOSE"
 msgstr "ЗАКРИТИ"
 
-#: static/js/policies.js:211
+#: static/js/policies.js:229
 msgid "UPDATE"
 msgstr "КОРЕГУВАТИ"
+
+#~ msgid "Success"
+#~ msgstr "Успіх"

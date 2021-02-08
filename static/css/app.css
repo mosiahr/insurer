@@ -69,3 +69,10 @@ td > a:hover {
 .form-field-size {
     max-width: 140px;
 }
+
+.alert-message {
+    position: absolute;
+    top: 50px;
+    right: 15px;
+    z-index: 1001;
+}

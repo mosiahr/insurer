@@ -28,7 +28,6 @@ $(document).ready(function () {
 });
 
 
-
 // From Django doc
 function getCookie(name) {
     var cookieValue = null;
@@ -106,6 +105,7 @@ function bsmodals_custom_confirm(title, msg_body, msg_extra, callback, callback_
     modal.modal();
 }
 
+// Updating the insurance policy
 $("table.table > tbody > tr").on('click', 'td', function (event) {
     let yes = '&#9899;';
     let no = '&#10060;';
@@ -142,6 +142,10 @@ $("table.table > tbody > tr").on('click', 'td', function (event) {
                                 td.find('span').removeClass('false').addClass('true');
                                 td.find('span').empty().append(yes);
                             }
+
+                            const formats = gettext("The policy %s was update successfuly!");
+                            const text = interpolate(formats, [numberPolicy]);
+                            showAlertMessage(text, 'alert-success');
                         })
                         .fail(function (data) {
                             bsmodals_error(data.statusText, "btn-warning");
@@ -152,18 +156,21 @@ $("table.table > tbody > tr").on('click', 'td', function (event) {
     }
 });
 
+// Sending SMS message
 $("table.table > tbody > tr > td > button.send_sms").on('click', function (event, message) {
-    let buttonSendSms = $(this);
-    let idPolicy = buttonSendSms.parents('tr').attr('data-id');
-    let customerPolicy = buttonSendSms.parents('tr').find('td.customer').text();
-    let numberPolicy = buttonSendSms.parents('tr').find('td.number').text();
-    let end_datePolicy = buttonSendSms.parents('tr').find('td.end_date').text();
+    const buttonSendSms = $(this);
+    const idPolicy = buttonSendSms.parents('tr').attr('data-id');
+    const customerPolicy = buttonSendSms.parents('tr').find('td.customer').text();
+    const numberPolicy = buttonSendSms.parents('tr').find('td.number').text();
+    const end_datePolicy = buttonSendSms.parents('tr').find('td.end_date').text();
+    const msgModals = gettext('Are you sure you want to send the SMS messages?');
     let messageSendSms = message;
 
     if (!message) {
-        messageSendSms = "".concat(customerPolicy, ', ', 'insurance policy', ' ', numberPolicy, ' ', 'expires on', ' ', end_datePolicy)
+        const policyObj = {customer: customerPolicy, number: numberPolicy, end_date: end_datePolicy};
+        const formats = gettext("%(customer)s, insurance policy %(number)s expires on %(end_date)s");
+        messageSendSms = interpolate(formats, policyObj, true);
     }
-    let msgModals = gettext('Are you sure you want to send the SMS messages?');
 
     $('#update-sms-dialog-close').click(function () {
         buttonSendSms.trigger("click");
@@ -174,7 +181,7 @@ $("table.table > tbody > tr > td > button.send_sms").on('click', function (event
         buttonSendSms.trigger('click', msgAfterUpdate);
     });
 
-    bsmodals_custom_confirm(gettext('Send message SMS messages'), messageSendSms, msgModals, function (result) {
+    bsmodals_custom_confirm(gettext('Send SMS message'), messageSendSms, msgModals, function (result) {
             if (result) {
                 $.ajax({
                     method: 'POST',
@@ -189,15 +196,20 @@ $("table.table > tbody > tr > td > button.send_sms").on('click', function (event
                 })
                     .done(function (data, status, jqXHR) {
                             // { #console.log('jqXHR: ', jqXHR.status); # }
-                            bsmodals_alert(gettext('Success') + '!',
-                                gettext('The message was sent successfuly') + '!')
+                            var text = gettext('The message was sent successfuly') + '!';
+                            showAlertMessage(text, 'alert-success');
+
                             // Adding 1 to quantity SMS
                             var quantity_sms = buttonSendSms.find('span').text();
                             buttonSendSms.find('span').text(parseInt(quantity_sms) + 1)
+                            buttonSendSms.find('span').removeClass('badge-light')
+                            buttonSendSms.find('span').addClass('badge-success')
                         }
                     )
                     .fail(function (data) {
-                        bsmodals_error(data.statusText, "btn-warning");
+                        // bsmodals_error(data.statusText, "btn-warning");
+                        var text = data.statusText.charAt(0).toUpperCase() + data.statusText.slice(1) + '. ' + gettext("The message wasn't sent") + '!';
+                        showAlertMessage(text, 'alert-danger');
                     })
             }
         },
@@ -211,6 +223,6 @@ $("table.table > tbody > tr > td > button.send_sms").on('click', function (event
             customConfirmDialog.show(data);
         }
         , yes_text = gettext('OK'), yes_style = 'btn-success', no_text = gettext('CLOSE'), no_style = 'btn-secondary',
-        update_text = gettext('UPDATE'), update_style = 'btn-danger'
+        update_text = gettext('UPDATE'), update_style = 'btn-warning'
     );
 });

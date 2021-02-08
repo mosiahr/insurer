@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load bootstrap4 %}
 {% load i18n %}
 {% load render_table from django_tables2 %}
 {% block title %}{% translate 'Policies' %}{% endblock %}
 
 {% block content %}
+    <div id="wrapper-messages"></div>
     {% if filter %}
         {{ filter.form.media }}
         <h5 class="p-2 bg-light-blacker text-left">
@@ -40,6 +42,8 @@
 
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 
-    <script src="/static/js/policies.js"></script>
+    <script src="{% static 'js/alertMessage.js' %}"></script>
+
+    <script src="{% static 'js/policies.js' %}"></script>
 {% endblock %}
 
