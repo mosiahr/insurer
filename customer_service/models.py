@@ -244,6 +244,7 @@ class MessageSmsAbstractModel(MessageAbstractModel):
         abstract = True
         verbose_name = _('SMS messages')
         verbose_name_plural = _('SMS messages')
+        ordering = ['-created']
 
 
 class MessageSmsInsurancePolicyExpires(MessageSmsAbstractModel):

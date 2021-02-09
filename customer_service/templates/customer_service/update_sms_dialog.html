@@ -6,14 +6,17 @@
 
     <form>
         <div class="form-group">
-            <label for="customer" class="col-form-label">{% translate 'Customer' %}</label>
-            <input type="text" class="form-control" id="customer" name="customer">
+            <label for="update-sms-dialog-customer" class="col-form-label">{% translate 'Customer' %}</label>
+            <input type="text" class="form-control" id="update-sms-dialog-customer" name="customer">
 
-            <label for="number_policy" class="col-form-label">{% translate 'Insurance Policy' %}</label>
-            <input type="text" class="form-control" id="number_policy" name="number_policy">
+            <label for="update-sms-dialog-number" class="col-form-label">{% translate 'Insurance Policy' %}</label>
+            <input type="text" class="form-control" id="update-sms-dialog-number" name="number">
 
-            <label for="message_sms" class="col-form-label">{% translate 'Message' %}</label>
-            <textarea id="message_sms" class="form-control" name="message_sms" rows="5"></textarea>
+            <label for="update-sms-dialog-end-date" class="col-form-label">{% translate 'End date' %}</label>
+            <input type="text" class="form-control" id="update-sms-dialog-end-date" name="end_date">
+
+            <label for="update-sms-dialog-message-sms" class="col-form-label">{% translate 'Message' %}</label>
+            <textarea id="update-sms-dialog-message-sms" class="form-control" name="message_sms" rows="5"></textarea>
         </div>
     </form>
 {% endblock body %}

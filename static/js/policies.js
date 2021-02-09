@@ -27,6 +27,18 @@ $(document).ready(function () {
     })
 });
 
+// Update sms message dialog
+$("#update-sms-dialog-customer, #update-sms-dialog-number, #update-sms-dialog-end-date").on('change input',
+    function () {
+        const policy = {
+            customer: $('#update-sms-dialog-customer').val(),
+            number: $('#update-sms-dialog-number').val(),
+            end_date: $('#update-sms-dialog-end-date').val()
+        }
+        const formats = gettext("%(customer)s, insurance policy %(number)s expires on %(end_date)s");
+        let messageText = interpolate(formats, policy, true);
+        $('#update-sms-dialog-message-sms').val(messageText)
+    })
 
 // From Django doc
 function getCookie(name) {
@@ -159,17 +171,24 @@ $("table.table > tbody > tr").on('click', 'td', function (event) {
 // Sending SMS message
 $("table.table > tbody > tr > td > button.send_sms").on('click', function (event, message) {
     const buttonSendSms = $(this);
-    const idPolicy = buttonSendSms.parents('tr').attr('data-id');
-    const customerPolicy = buttonSendSms.parents('tr').find('td.customer').text();
-    const numberPolicy = buttonSendSms.parents('tr').find('td.number').text();
-    const end_datePolicy = buttonSendSms.parents('tr').find('td.end_date').text();
-    const msgModals = gettext('Are you sure you want to send the SMS messages?');
-    let messageSendSms = message;
+    const formats = gettext("%(customer)s, insurance policy %(number)s expires on %(end_date)s");
 
-    if (!message) {
-        const policyObj = {customer: customerPolicy, number: numberPolicy, end_date: end_datePolicy};
-        const formats = gettext("%(customer)s, insurance policy %(number)s expires on %(end_date)s");
-        messageSendSms = interpolate(formats, policyObj, true);
+    let policy = {
+        id: buttonSendSms.parents('tr').attr('data-id'),
+    }
+    if (message) {
+        policy.customer = $('#update-sms-dialog-customer').val();
+        policy.number = $('#update-sms-dialog-number').val();
+        policy.end_date = $('#update-sms-dialog-end-date').val();
+        policy.message_sms = message
+    } else {
+        customer = buttonSendSms.parents('tr').find('td.customer').text();
+        customerArr = customer.split(' ');
+        policy.customer = customerArr.length === 3 ? customerArr[1] + ' ' + customerArr[2] : customer;
+
+        policy.number = buttonSendSms.parents('tr').find('td.number').text();
+        policy.end_date = buttonSendSms.parents('tr').find('td.end_date').text();
+        policy.message_sms = interpolate(formats, policy, true)
     }
 
     $('#update-sms-dialog-close').click(function () {
@@ -177,11 +196,13 @@ $("table.table > tbody > tr > td > button.send_sms").on('click', function (event
     });
 
     $('#update-sms-dialog-ok').click(function () {
-        let msgAfterUpdate = $('#message_sms').val();
+        let msgAfterUpdate = $('#update-sms-dialog-message-sms').val();
         buttonSendSms.trigger('click', msgAfterUpdate);
     });
 
-    bsmodals_custom_confirm(gettext('Send SMS message'), messageSendSms, msgModals, function (result) {
+    bsmodals_custom_confirm(gettext('Send SMS message'), policy.message_sms,
+        gettext('Are you sure you want to send the SMS messages?'),
+        function (result) {
             if (result) {
                 $.ajax({
                     method: 'POST',
@@ -190,8 +211,8 @@ $("table.table > tbody > tr > td > button.send_sms").on('click', function (event
                         xhr.setRequestHeader("X-CSRFToken", csrftoken)
                     },
                     data: {
-                        "body": messageSendSms,
-                        "insurance_policy": idPolicy
+                        "body": policy.message_sms,
+                        "insurance_policy": policy.id
                     },
                 })
                     .done(function (data, status, jqXHR) {
@@ -215,12 +236,7 @@ $("table.table > tbody > tr > td > button.send_sms").on('click', function (event
         },
         function () {
             let customConfirmDialog = new FormModal('update-sms-dialog');
-            let data = {
-                'number_policy': numberPolicy,
-                'customer': customerPolicy,
-                'message_sms': messageSendSms
-            }
-            customConfirmDialog.show(data);
+            customConfirmDialog.show(policy);
         }
         , yes_text = gettext('OK'), yes_style = 'btn-success', no_text = gettext('CLOSE'), no_style = 'btn-secondary',
         update_text = gettext('UPDATE'), update_style = 'btn-warning'

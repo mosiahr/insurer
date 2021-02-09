@@ -27,44 +27,65 @@
         <div class="col-sm">
             <div class="pl-3 mb-1 bg-secondary text-white">{% translate 'Policy' %}</div>
             {% if policy.sticker %}
-                <div class="p-2 mb-2 bg-light-blacker text-white"><small>{% translate 'Sticker' %}: </small><br>{{ policy.sticker }}</div>
+                <div class="p-2 mb-2 bg-light-blacker text-white">
+                    <small>{% translate 'Sticker' %}: </small><br>{{ policy.sticker }}</div>
             {% endif %}
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Registration Date' %}: </small><br>{{ policy.registration_date }}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Begin Date' %}: </small><br>{{ policy.begin_date }}
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Registration Date' %}: </small><br>{{ policy.registration_date }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Begin Date' %}: </small><br>{{ policy.begin_date }}
             </div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'End Date' %}: </small><br>{{ policy.end_date }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'End Date' %}: </small><br>{{ policy.end_date }}</div>
 
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Insurance Code' %}: </small><br>{{ policy.insurance_code }}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Sum Insured' %}: </small><br>{{ policy.sum_insured }}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Price' %}: </small><br>{{ policy.price }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Insurance Code' %}: </small><br>{{ policy.insurance_code }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Sum Insured' %}: </small><br>{{ policy.sum_insured }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Price' %}: </small><br>{{ policy.price }}</div>
 
             {% if policy.bonus %}
-                <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Bonus' %}: </small><br>{{ policy.bonus }}</div>
+                <div class="p-3 mb-2 bg-light-blacker text-body">
+                    <small>{% translate 'Bonus' %}: </small><br>{{ policy.bonus }}</div>
             {% endif %}
 
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Territory' %}: </small><br>{{ policy.territory }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Territory' %}: </small><br>{{ policy.territory }}</div>
         </div>
 
         <!-- Customer information -->
         <div class="col-sm">
             <div class="pl-3 mb-1 bg-secondary text-white">{% translate 'Customer' %}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Customer' %}: </small><br>{{ policy.customer.name }}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'EDRPOU/IIN' %}: </small><br>{{ policy.customer.ind_number }}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Address' %}: </small><br>{{ policy.customer.address }}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Country' %}: </small><br>{{ policy.customer.country }}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Phone' %}: </small><br>{{ policy.customer.phone }}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Type' %}: </small><br>{{ policy.customer.customer_type }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Customer' %}: </small><br>{{ policy.customer.name }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'EDRPOU/IIN' %}: </small><br>{{ policy.customer.ind_number }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Address' %}: </small><br>{{ policy.customer.address }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Country' %}: </small><br>{{ policy.customer.country }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Phone' %}: </small><br>{{ policy.customer.phone }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Type' %}: </small><br>{{ policy.customer.customer_type }}</div>
         </div>
 
         <!-- Car information -->
         <div class="col-sm">
             <div class="pl-3 mb-1 bg-secondary text-white">{% translate 'Car' %}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Mark' %}: </small><br>{{ policy.car.mark }}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Model' %}: </small><br>{{ policy.car.model }}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Registration place' %}: </small><br>{{ policy.car.registration_place }}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Registration country' %}: </small><br>{{ policy.car.registration_country }}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'Registration number' %}: </small><br>{{ policy.car.registration_number }}</div>
-            <div class="p-3 mb-2 bg-light-blacker text-body"><small>{% translate 'VIN' %}: </small><br>{{ policy.car.vin_code }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Mark' %}: </small><br>{{ policy.car.mark }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Model' %}: </small><br>{{ policy.car.model }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Registration place' %}: </small><br>{{ policy.car.registration_place }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Registration country' %}: </small><br>{{ policy.car.registration_country }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'Registration number' %}: </small><br>{{ policy.car.registration_number }}</div>
+            <div class="p-3 mb-2 bg-light-blacker text-body">
+                <small>{% translate 'VIN' %}: </small><br>{{ policy.car.vin_code }}</div>
         </div>
 
         <!-- Message information -->
@@ -74,7 +95,9 @@
                 {% for message in  sms_messages %}
                     <div class="p-3 mb-2 bg-light-blacker text-body">
                         {{ message.created }}<br>
-                        {{ message.body }}
+                        {% autoescape on %}
+                            {{ message.body | linebreaksbr }}
+                        {% endautoescape %}
                     </div>
                 {% endfor %}
             {% else %}

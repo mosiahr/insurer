@@ -15,7 +15,7 @@ from .filters import InsurancePolicyFilter, \
 class InsurancePolicyView(LoginRequiredMixin, SingleTableMixin, FilterView):
     """
     Render list of insurance polices. The view has the ability to edit the
-    result after calling the customer. Also, the view allows use Django Rest
+    result after calling to the customer. Also, the view allows use Django Rest
     Framework and Twilio.com for send SMS messages to customers to notify them
     that insurance policy is ending.
     """
@@ -36,7 +36,7 @@ class InsurancePolicyDetailView(LoginRequiredMixin, DetailView):
         - car information;
         - sms messages those were sent to customer to notify them that insurance
           policy is ending.
-    The view has the ability to edit the result after colling the customer.
+    The view has the ability to edit the result after calling to the customer.
     """
     model = InsurancePolicy
     template_name = 'customer_service/policy_detail.html'
