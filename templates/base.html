@@ -28,7 +28,8 @@
 </div>
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"><img src="{% static 'icon/favicon_io/favicon-32x32.png' %}" alt="" height=""> <strong> surer</strong></a>
+        <a class="navbar-brand" href="#"><img src="{% static 'icon/favicon_io/favicon-32x32.png' %}" alt="" height="">
+            <strong> surer</strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -39,6 +40,17 @@
                     <a class="nav-link" href="{{ policies }}">{% translate 'Policies' %}</a></li>
                 <li class="nav-item {% active request messages %}">
                     <a class="nav-link" href="{{ messages }}">{% translate 'Messages' %}</a></li>
+            </ul>
+            <ul class="navbar-nav mr-3">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as languages %}
+                {% for lang_code, lang_name in languages %}
+                    {% language lang_code %}
+                        <li class="nav-item {% if LANGUAGE_CODE == lang_code %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'customer_service:policies' %}">{{ lang_code }}</a>
+                        </li>
+                    {% endlanguage %}
+                {% endfor %}
             </ul>
             <ul class="navbar-nav">
                 {% if user.is_authenticated %}

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.utils.translation import ugettext as _
 
 from customer_service.models import InsurancePolicy, \
     MessageSmsInsurancePolicyExpires
@@ -15,7 +16,7 @@ class InsurancePolicySerializer(serializers.ModelSerializer):
 
 class MessageSmsSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
-        validated_data['body'] += ('.\n' + MANAGER_PHONE + '\n' + MESSAGE_FOOTER)
+        validated_data['body'] += ('.\n' + _('Info') + ': ' + MANAGER_PHONE + '\n' + MESSAGE_FOOTER)
         return super(MessageSmsSerializer, self).create(validated_data)
 
     class Meta:

@@ -171,23 +171,29 @@ $("table.table > tbody > tr").on('click', 'td', function (event) {
 // Sending SMS message
 $("table.table > tbody > tr > td > button.send_sms").on('click', function (event, message) {
     const buttonSendSms = $(this);
-    const formats = gettext("%(customer)s, insurance policy %(number)s expires on %(end_date)s");
 
     let policy = {
         id: buttonSendSms.parents('tr').attr('data-id'),
+        end_date: buttonSendSms.parents('tr').find('td.end_date').text()
     }
+    let policyEndDateMilliseconds = Date.parse(moment(policy.end_date + '23:59', 'DD.MM.YYYY HH:mm').format());
+    let nowMilliseconds = Date.parse(moment().format())
+
+    let formats = policyEndDateMilliseconds < nowMilliseconds
+        ? gettext("%(customer)s, insurance policy %(number)s expired on %(end_date)s")
+        : gettext("%(customer)s, insurance policy %(number)s expires on %(end_date)s")
+
     if (message) {
         policy.customer = $('#update-sms-dialog-customer').val();
         policy.number = $('#update-sms-dialog-number').val();
         policy.end_date = $('#update-sms-dialog-end-date').val();
         policy.message_sms = message
     } else {
+        // Cutting the last name from the customer's full name
         customer = buttonSendSms.parents('tr').find('td.customer').text();
         customerArr = customer.split(' ');
         policy.customer = customerArr.length === 3 ? customerArr[1] + ' ' + customerArr[2] : customer;
-
         policy.number = buttonSendSms.parents('tr').find('td.number').text();
-        policy.end_date = buttonSendSms.parents('tr').find('td.end_date').text();
         policy.message_sms = interpolate(formats, policy, true)
     }
 

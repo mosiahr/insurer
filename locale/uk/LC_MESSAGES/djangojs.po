@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-10 00:12+0200\n"
+"POT-Creation-Date: 2021-02-11 16:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: static/js/policies.js:38 static/js/policies.js:174
+#: static/js/policies.js:38 static/js/policies.js:191
 msgid "%(customer)s, insurance policy %(number)s expires on %(end_date)s"
 msgstr "%(customer)s, страховий поліс %(number)s закінчується %(end_date)s"
 
@@ -62,30 +62,34 @@ msgstr "ТАК"
 msgid "NO"
 msgstr "НІ"
 
-#: static/js/policies.js:201
+#: static/js/policies.js:192
+msgid "%(customer)s, insurance policy %(number)s expired on %(end_date)s"
+msgstr "%(customer)s, страховий поліс %(number)s закінчився %(end_date)s"
+
+#: static/js/policies.js:217
 msgid "Send SMS message"
 msgstr "Відправити SMS повідомлення"
 
-#: static/js/policies.js:202
+#: static/js/policies.js:218
 msgid "Are you sure you want to send the SMS messages?"
 msgstr "Ви впевнені, що хочете надіслати SMS повідомлення?"
 
-#: static/js/policies.js:218
+#: static/js/policies.js:234
 msgid "The message was sent successfuly"
 msgstr "Повідомлення успішно надіслано"
 
-#: static/js/policies.js:230
+#: static/js/policies.js:246
 msgid "The message wasn't sent"
 msgstr "Повідомлення не надіслано"
 
-#: static/js/policies.js:239
+#: static/js/policies.js:255
 msgid "OK"
 msgstr ""
 
-#: static/js/policies.js:239
+#: static/js/policies.js:255
 msgid "CLOSE"
 msgstr "ЗАКРИТИ"
 
-#: static/js/policies.js:240
+#: static/js/policies.js:256
 msgid "UPDATE"
 msgstr "КОРЕГУВАТИ"

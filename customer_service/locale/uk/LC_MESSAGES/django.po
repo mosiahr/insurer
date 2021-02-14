@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-05 09:06+0200\n"
+"POT-Creation-Date: 2021-02-11 23:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,19 +27,19 @@ msgstr "Код"
 
 #: customer_service/admin.py:56 customer_service/filters.py:52
 #: customer_service/models.py:97
-#: customer_service/templates/customer_service/policy_detail.html:50
-#: customer_service/templates/customer_service/policy_detail.html:51
+#: customer_service/templates/customer_service/policy_detail.html:59
+#: customer_service/templates/customer_service/policy_detail.html:61
 #: customer_service/templates/customer_service/update_sms_dialog.html:9
 msgid "Customer"
 msgstr "Клієнт"
 
 #: customer_service/admin.py:65 customer_service/models.py:99
-#: customer_service/templates/customer_service/policy_detail.html:61
+#: customer_service/templates/customer_service/policy_detail.html:76
 msgid "Car"
 msgstr "Автомобіль"
 
 #: customer_service/admin.py:70
-#: customer_service/templates/customer_service/policy_detail.html:45
+#: customer_service/templates/customer_service/policy_detail.html:54
 msgid "Territory"
 msgstr "Територія"
 
@@ -48,13 +48,17 @@ msgid "SMS"
 msgstr ""
 
 #: customer_service/admin.py:123
-#: customer_service/templates/customer_service/policy_detail.html:56
+#: customer_service/templates/customer_service/policy_detail.html:71
 msgid "Type"
 msgstr "Тип"
 
 #: customer_service/admin.py:128
 msgid "IIN"
 msgstr "ІПН"
+
+#: customer_service/api/serializers.py:19
+msgid "Info"
+msgstr "Інфо"
 
 #: customer_service/filters.py:13
 msgid "Number insurance policy"
@@ -85,12 +89,12 @@ msgid "Individual identification number"
 msgstr "Індивідуальний податковий номер"
 
 #: customer_service/models.py:62
-#: customer_service/templates/customer_service/policy_detail.html:62
+#: customer_service/templates/customer_service/policy_detail.html:78
 msgid "Mark"
 msgstr "Марка"
 
 #: customer_service/models.py:63
-#: customer_service/templates/customer_service/policy_detail.html:63
+#: customer_service/templates/customer_service/policy_detail.html:80
 msgid "Model"
 msgstr "Модель"
 
@@ -119,11 +123,12 @@ msgid "Begin date"
 msgstr "Дата початку"
 
 #: customer_service/models.py:93
+#: customer_service/templates/customer_service/update_sms_dialog.html:15
 msgid "End date"
 msgstr "Дата зак."
 
 #: customer_service/models.py:103
-#: customer_service/templates/customer_service/policy_detail.html:39
+#: customer_service/templates/customer_service/policy_detail.html:46
 msgid "Price"
 msgstr "Ціна"
 
@@ -152,7 +157,7 @@ msgstr "Додзвонились і буде страхувати"
 msgid "Was called and will not insure"
 msgstr "Додзвонились і не буде страхувати"
 
-#: customer_service/models.py:121 customer_service/models.py:252
+#: customer_service/models.py:121 customer_service/models.py:253
 #: customer_service/templates/customer_service/update_sms_dialog.html:12
 msgid "Insurance Policy"
 msgstr "Страховий поліс"
@@ -208,7 +213,7 @@ msgid "SMS text"
 msgstr "Текст SMS"
 
 #: customer_service/templates/customer_service/custom_confirm_dialog.html:7
-#: customer_service/templates/customer_service/update_sms_dialog.html:15
+#: customer_service/templates/customer_service/update_sms_dialog.html:18
 msgid "Message"
 msgstr "Повідомлення"
 
@@ -217,75 +222,75 @@ msgid "Messages"
 msgstr "Повідомлення"
 
 #: customer_service/templates/customer_service/policies.html:6
-#: customer_service/templates/customer_service/policies.html:20
+#: customer_service/templates/customer_service/policies.html:14
 msgid "Policies"
 msgstr "Поліси"
 
-#: customer_service/templates/customer_service/policy_detail.html:30
+#: customer_service/templates/customer_service/policy_detail.html:31
 msgid "Sticker"
 msgstr "Спеціальний знак"
 
-#: customer_service/templates/customer_service/policy_detail.html:32
+#: customer_service/templates/customer_service/policy_detail.html:34
 msgid "Registration Date"
 msgstr "Дата реєстрації"
 
-#: customer_service/templates/customer_service/policy_detail.html:33
+#: customer_service/templates/customer_service/policy_detail.html:36
 msgid "Begin Date"
 msgstr "Дата початку"
 
-#: customer_service/templates/customer_service/policy_detail.html:35
+#: customer_service/templates/customer_service/policy_detail.html:39
 msgid "End Date"
 msgstr "Дата зак."
 
-#: customer_service/templates/customer_service/policy_detail.html:37
+#: customer_service/templates/customer_service/policy_detail.html:42
 msgid "Insurance Code"
 msgstr "Код виду страхування"
 
-#: customer_service/templates/customer_service/policy_detail.html:38
+#: customer_service/templates/customer_service/policy_detail.html:44
 msgid "Sum Insured"
 msgstr "Страхова сума"
 
-#: customer_service/templates/customer_service/policy_detail.html:42
+#: customer_service/templates/customer_service/policy_detail.html:50
 msgid "Bonus"
 msgstr "Бонус"
 
-#: customer_service/templates/customer_service/policy_detail.html:52
+#: customer_service/templates/customer_service/policy_detail.html:63
 msgid "EDRPOU/IIN"
 msgstr "ЄДПРОУ/ІПН"
 
-#: customer_service/templates/customer_service/policy_detail.html:53
+#: customer_service/templates/customer_service/policy_detail.html:65
 msgid "Address"
 msgstr "Адреса"
 
-#: customer_service/templates/customer_service/policy_detail.html:54
+#: customer_service/templates/customer_service/policy_detail.html:67
 msgid "Country"
 msgstr "Країна"
 
-#: customer_service/templates/customer_service/policy_detail.html:55
+#: customer_service/templates/customer_service/policy_detail.html:69
 msgid "Phone"
 msgstr "Телефон"
 
-#: customer_service/templates/customer_service/policy_detail.html:64
+#: customer_service/templates/customer_service/policy_detail.html:82
 msgid "Registration place"
 msgstr "Місце реєстрації"
 
-#: customer_service/templates/customer_service/policy_detail.html:65
+#: customer_service/templates/customer_service/policy_detail.html:84
 msgid "Registration country"
 msgstr "Країна реєстрації"
 
-#: customer_service/templates/customer_service/policy_detail.html:66
+#: customer_service/templates/customer_service/policy_detail.html:86
 msgid "Registration number"
 msgstr "Реєстраційний номер"
 
-#: customer_service/templates/customer_service/policy_detail.html:67
+#: customer_service/templates/customer_service/policy_detail.html:88
 msgid "VIN"
 msgstr ""
 
-#: customer_service/templates/customer_service/policy_detail.html:72
+#: customer_service/templates/customer_service/policy_detail.html:93
 msgid "SMS Messages"
 msgstr "SMS повідомлення"
 
-#: customer_service/templates/customer_service/policy_detail.html:82
+#: customer_service/templates/customer_service/policy_detail.html:105
 msgid "No SMS messages yet"
 msgstr "Поки що немає SMS-повідомлень"
 
@@ -293,10 +298,10 @@ msgstr "Поки що немає SMS-повідомлень"
 msgid "Update SMS message"
 msgstr "Корегування SMS повідомлення"
 
-#: customer_service/templates/customer_service/update_sms_dialog.html:22
+#: customer_service/templates/customer_service/update_sms_dialog.html:25
 msgid "CLOSE"
 msgstr "ЗАКРИТИ"
 
-#: customer_service/templates/customer_service/update_sms_dialog.html:23
+#: customer_service/templates/customer_service/update_sms_dialog.html:26
 msgid "OK"
 msgstr ""
