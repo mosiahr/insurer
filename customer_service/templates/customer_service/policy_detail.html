@@ -6,7 +6,7 @@
 {% block content %}
     <!-- Result after the call to the customer -->
     <h5 class="p-3 mb-2 bg-light-blacker" id="result-after-call"
-        data-insurance-policy-update-url="{% url 'api-customer-service:api-insurance-policy-update' pk=policy.id %}">
+        data-insurance-policy-update-url="{% url 'api-v1-customer-service:api-insurance-policy-update' pk=policy.id %}">
         {% bootstrap_button content='&#x276E;' href=request.META.HTTP_REFERER size='small' button_class='btn-light' extra_classes="mr-2" %}
         <strong>{{ policy.number }}</strong>
         <a href="#" id="is_reinsured"

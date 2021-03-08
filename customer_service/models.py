@@ -4,7 +4,7 @@ import datetime
 from decimal import Decimal
 
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.utils import timezone as django_timezone
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -27,9 +27,11 @@ User = get_user_model()
 #     pass
 
 class MainAbstractModel(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created = models.DateTimeField(default=django_timezone.now)
-    updated = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True,
+                               blank=True, verbose_name=_('Author'))
+    created = models.DateTimeField(default=django_timezone.now,
+                                   verbose_name=_('Created'))
+    updated = models.DateTimeField(auto_now=True, verbose_name=_('Updated'))
 
     class Meta:
         abstract = True
@@ -41,18 +43,23 @@ class Customer(MainAbstractModel):
         ('Ю', _('Legal entity')),
     ]
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, verbose_name=_('Name'))
     ind_number = models.CharField(
         max_length=10,
         unique=True,
         verbose_name=_('Individual identification number'))
-    address = models.TextField()
-    country = models.CharField(max_length=50)
-    phone = models.CharField(max_length=50)
+    address = models.TextField(verbose_name=_("Address"))
+    country = models.CharField(max_length=50, verbose_name=_("Country"))
+    phone = models.CharField(max_length=50, verbose_name=_("Phone"))
     customer_type = models.CharField(
         max_length=1,
         choices=INSURANCE_TYPE_CHOICES,
-        default='Ф')
+        default='Ф',
+        verbose_name=_("Type"))
+
+    class Meta:
+        verbose_name = _('Customer')
+        verbose_name_plural = _('Customers')
 
     def __str__(self):
         return self.name
@@ -67,6 +74,10 @@ class Car(MainAbstractModel):
     registration_number = models.CharField(
         max_length=50, verbose_name=_('Registration Number'))
     vin_code = models.CharField(max_length=17, verbose_name=_('VIN code'))
+
+    class Meta:
+        verbose_name = _('Car')
+        verbose_name_plural = _('Cars')
 
     def __str__(self):
         return f'{self.mark} {self.model} ({self.registration_number})'
@@ -175,7 +186,7 @@ class DataFile(MainAbstractModel):
                                 ind_number=row[13])
                         except ObjectDoesNotExist:
                             customer = Customer(
-                                # user=self.user,
+                                author=self.author,
                                 name=row[12],
                                 ind_number=row[13],
                                 address=row[14],
@@ -191,7 +202,7 @@ class DataFile(MainAbstractModel):
                                 vin_code=row[23])
                         except ObjectDoesNotExist:
                             car = Car(
-                                # user=self.user,
+                                author=self.author,
                                 mark=row[18], model=row[19],
                                 registration_place=row[20],
                                 registration_country=row[21],
@@ -203,7 +214,7 @@ class DataFile(MainAbstractModel):
                             InsurancePolicy.objects.get(number=row[6])
                         except ObjectDoesNotExist:
                             policy = InsurancePolicy(
-                                # user=self.user,
+                                author=self.author,
                                 number=row[6], sticker=row[7],
                                 registration_date=self.parse_date(row[8],
                                                                   self.date_format),

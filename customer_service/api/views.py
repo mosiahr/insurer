@@ -17,3 +17,6 @@ class MessageSmsInsurancePolicyExpiresListCreateAPIView(LoginRequiredMixin,
                                                         ListCreateAPIView):
     serializer_class = MessageSmsSerializer
     queryset = MessageSmsInsurancePolicyExpires.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)

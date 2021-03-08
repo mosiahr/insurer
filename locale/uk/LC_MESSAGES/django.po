@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-11 23:38+0200\n"
+"POT-Creation-Date: 2021-03-07 13:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,28 +21,32 @@ msgstr ""
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: insurer/settings.py:126
-msgid "Ukrainian"
+#: insurer/urls.py:26 insurer/urls.py:27
+msgid "Insurer administration"
+msgstr "Insurer адміністрування"
+
+#: insurer/urls.py:28
+msgid "Site administration"
 msgstr ""
 
-#: insurer/settings.py:127
-msgid "English"
-msgstr ""
-
-#: templates/base.html:39
+#: templates/base.html:40
 msgid "Policies"
 msgstr "Поліси"
 
-#: templates/base.html:41
+#: templates/base.html:42
 msgid "Messages"
 msgstr "Повідомлення"
 
-#: templates/base.html:46 templates/registration/logged_out.html:4
+#: templates/base.html:62
+msgid "Your profile"
+msgstr ""
+
+#: templates/base.html:64 templates/registration/logged_out.html:4
 #: templates/registration/logged_out.html:9
 msgid "Log out"
 msgstr ""
 
-#: templates/base.html:49 templates/registration/login.html:4
+#: templates/base.html:70 templates/registration/login.html:4
 #: templates/registration/login.html:9 templates/registration/login.html:15
 msgid "Log in"
 msgstr "Увійти"

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.utils.safestring import mark_safe
 
 from .models import InsurancePolicy, Car, DataFile, Customer, \
@@ -37,9 +37,7 @@ class InsurancePolicyAdmin(DisableAddChangeDeleteAdmin):
     fields = ['number', 'registration_date', 'begin_date', 'end_date',
               'insurance_code', 'customer',
               'car', 'sum_insured',
-              'price', 'territory']
-
-    # readonly_fields = ['user']
+              'price', 'territory', 'author', 'created', 'updated']
 
     def get_insurance_code(self, obj):
         return obj.insurance_code
@@ -90,22 +88,23 @@ class CarAdmin(admin.ModelAdmin):
                     'registration_country', 'registration_number',
                     'vin_code')
     ordering = ['id']
-    # readonly_fields = ['user']
+    readonly_fields = ['author', 'created', 'updated']
 
 
 @admin.register(DataFile)
 class DataFileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'file', 'created')
+    list_display = ('id', 'file', 'created', 'author')
     ordering = ['id']
 
-    # readonly_fields = ['user']
+    readonly_fields = ['author', 'created', 'updated']
 
-    # def save_model(self, request, obj, form, change):
-    #     """
-    #     Given a model instance save it to the database.
-    #     """
-    #     obj.user = request.user
-    #     super().save_model(request, obj, form, change)
+    def save_model(self, request, obj, form, change):
+        """
+        Given a model instance save it to the database.
+        """
+        if not obj.author:
+            obj.author = request.user
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(Customer)
@@ -115,7 +114,7 @@ class CustomerAdmin(admin.ModelAdmin):
         'country', 'phone')
     ordering = ['id']
 
-    # readonly_fields = ['user']
+    readonly_fields = ['author', 'created', 'updated']
 
     def get_customer_type(self, obj):
         return obj.customer_type
@@ -128,14 +127,9 @@ class CustomerAdmin(admin.ModelAdmin):
     get_ind_number.short_description = _('IIN')
 
 
-
-
-
 @admin.register(MessageSmsInsurancePolicyExpires)
 class MessageSmsInsurancePolicyExpiresAdmin(DisableAddChangeDeleteAdmin):
     list_display = ('sid', 'body', 'from_phone_number', 'to_phone_number',
                     'insurance_policy', 'created')
-    readonly_fields = ['created']
+    readonly_fields = ['author', 'created', 'updated']
     list_display_links = ['sid']
-
-

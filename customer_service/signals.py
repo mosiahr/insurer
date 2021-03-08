@@ -12,6 +12,7 @@ def pre_save_sms_message(sender, instance, **kwargs):
     """
     Receiver which will be connected to this signal.
     """
+    print(dir(sender), instance)
     message = CreateMessage(account_sid=ACCOUNT_SID, auth_token=AUTH_TOKEN)
 
     if SEND_SMS_MESSAGE:

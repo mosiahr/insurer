@@ -52,7 +52,7 @@ class InsurancePolicyTable(tables.Table):
         row_attrs = {
             'data-id': lambda record: record.pk,
             'data-url': lambda record: reverse(
-                'api-customer-service:api-insurance-policy-update',
+                'api-v1-customer-service:api-insurance-policy-update',
                 kwargs={'pk': record.pk}),
         }
 
