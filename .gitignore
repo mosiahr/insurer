@@ -1,10 +1,6 @@
 .idea/*
 *.pyc
 __pycache__/*
-db.sqlite3
-media/*
-insurer/conf.py
 
-node_modules/*
-logs/*
-
+.prod.env
+.twilio.env

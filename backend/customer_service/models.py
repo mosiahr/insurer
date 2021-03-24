@@ -11,9 +11,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth import get_user_model
 
-from customer_service.utils import generation_uuid, get_uuid_for_sms
-from insurer.settings import DEFAULT_COUNTRY_UA, MEDIA_ROOT, \
-    DATE_INPUT_FORMAT_UA
+from customer_service.utils import get_uuid_for_sms
+from insurer.settings import MEDIA_ROOT, DATE_INPUT_FORMAT_UA
 from insurer.conf import FROM_, TO
 
 User = get_user_model()
@@ -73,7 +72,7 @@ class Car(MainAbstractModel):
     registration_country = models.CharField(max_length=50)
     registration_number = models.CharField(
         max_length=50, verbose_name=_('Registration Number'))
-    vin_code = models.CharField(max_length=17, verbose_name=_('VIN code'))
+    vin_code = models.CharField(max_length=30, verbose_name=_('VIN code'))
 
     class Meta:
         verbose_name = _('Car')

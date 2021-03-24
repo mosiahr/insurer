@@ -28,16 +28,17 @@ class DisableAddChangeDeleteAdmin(admin.ModelAdmin):
 
 
 @admin.register(InsurancePolicy)
-class InsurancePolicyAdmin(DisableAddChangeDeleteAdmin):
+class InsurancePolicyAdmin(admin.ModelAdmin):
     list_display = ['number', 'registration_date', 'begin_date', 'end_date',
                     'get_insurance_code', 'get_customer',
                     'get_car', 'sum_insured',
                     'price', 'get_territory', 'get_sms']
     ordering = ['id']
-    fields = ['number', 'registration_date', 'begin_date', 'end_date',
-              'insurance_code', 'customer',
-              'car', 'sum_insured',
-              'price', 'territory', 'author', 'created', 'updated']
+    # fields = ['number', 'registration_date', 'begin_date', 'end_date',
+    #           'insurance_code', 'customer',
+    #           'car', 'sum_insured',
+    #           'price', 'territory', 'author', 'created', 'updated']
+    readonly_fields = ['author', 'created', 'updated']
 
     def get_insurance_code(self, obj):
         return obj.insurance_code
